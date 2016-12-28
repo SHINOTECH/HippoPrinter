@@ -581,7 +581,7 @@ ModelObject::scale(const Pointf3 &versor)
 }
 
 void
-ModelObject::rotate(float angle, const Axis &axis)
+ModelObject::rotate(double angle, const Axis &axis)
 {
     for (ModelVolumePtrs::const_iterator v = this->volumes.begin(); v != this->volumes.end(); ++v) {
         (*v)->mesh.rotate(angle, axis);

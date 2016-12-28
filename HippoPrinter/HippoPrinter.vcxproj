@@ -111,6 +111,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="PrintConfigWidget.cpp" />
     <ClCompile Include="PrinterConfigWidget.cpp" />
+    <ClCompile Include="trackball\Quaternion.cpp" />
     <ClCompile Include="RenderGraphic.cpp" />
     <ClCompile Include="ShowWidget.cpp" />
     <ClCompile Include="src\admesh\connect.c" />
@@ -190,6 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
+    <ClInclude Include="trackball\Line2.h" />
+    <ClInclude Include="trackball\Quaternion.h" />
     <ClInclude Include="RenderGraphic.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\admesh\stl.h" />
@@ -237,6 +240,8 @@
     <ClInclude Include="src\polypartition.h" />
     <ClInclude Include="src\slic3r\GUI\3DScene.hpp" />
     <ClInclude Include="src\slic3r\GUI\GUI.hpp" />
+    <ClInclude Include="trackball\Vector3.h" />
+    <ClInclude Include="trackball\Vector2.h" />
     <CustomBuild Include="FilamentConfigWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing FilamentConfigWidget.h...</Message>

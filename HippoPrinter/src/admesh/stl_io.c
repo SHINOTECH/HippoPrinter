@@ -253,19 +253,19 @@ stl_put_little_int(FILE *fp, int value_in) {
 //************************************
 // 日期：2016/12/20 
 // 参数: FILE * fp
-// 参数: float value_in
+// 参数: double value_in
 // 返回: void
-// 功能: 在STL文件中以短格式写入float值
+// 功能: 在STL文件中以短格式写入double值
 //************************************
 void
-stl_put_little_float(FILE *fp, float value_in) {
+stl_put_little_double(FILE *fp, double value_in) {
   int new_value;
   union {
-    float float_value;
+    double double_value;
     char  char_value[4];
   } value;
 
-  value.float_value = value_in;
+  value.double_value = value_in;
 
   new_value  = value.char_value[0] & 0xFF;
   new_value |= (value.char_value[1] & 0xFF) << 0x08;
@@ -287,18 +287,18 @@ stl_write_binary_block(stl_file *stl, FILE *fp)
   int i;
   for(i = 0; i < stl->stats.number_of_facets; i++)
     {
-      stl_put_little_float(fp, stl->facet_start[i].normal.x);
-      stl_put_little_float(fp, stl->facet_start[i].normal.y);
-      stl_put_little_float(fp, stl->facet_start[i].normal.z);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[0].x);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[0].y);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[0].z);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[1].x);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[1].y);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[1].z);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[2].x);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[2].y);
-      stl_put_little_float(fp, stl->facet_start[i].vertex[2].z);
+      stl_put_little_double(fp, stl->facet_start[i].normal.x);
+      stl_put_little_double(fp, stl->facet_start[i].normal.y);
+      stl_put_little_double(fp, stl->facet_start[i].normal.z);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[0].x);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[0].y);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[0].z);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[1].x);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[1].y);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[1].z);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[2].x);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[2].y);
+      stl_put_little_double(fp, stl->facet_start[i].vertex[2].z);
       fputc(stl->facet_start[i].extra[0], fp);
       fputc(stl->facet_start[i].extra[1], fp);
     }

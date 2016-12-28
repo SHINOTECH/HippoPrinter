@@ -39,7 +39,7 @@ static void stl_initialize_facet_check_nearby(stl_file *stl);
 static void stl_load_edge_exact(stl_file *stl, stl_hash_edge *edge,
                                 stl_vertex *a, stl_vertex *b);
 static int stl_load_edge_nearby(stl_file *stl, stl_hash_edge *edge,
-                                stl_vertex *a, stl_vertex *b, float tolerance);
+                                stl_vertex *a, stl_vertex *b, double tolerance);
 static void insert_hash_edge(stl_file *stl, stl_hash_edge edge,
                              void (*match_neighbors)(stl_file *stl,
                                  stl_hash_edge *edge_a, stl_hash_edge *edge_b));
@@ -63,7 +63,7 @@ void
 stl_check_facets_exact(stl_file *stl) {
   /* This function builds the neighbors list.  No modifications are made
    *  to any of the facets.  The edges are said to match only if all six
-   *  floats of the first edge matches all six floats of the second edge.
+   *  doubles of the first edge matches all six doubles of the second edge.
    */
 
   stl_hash_edge  edge;
@@ -112,10 +112,10 @@ static void
 stl_load_edge_exact(stl_file *stl, stl_hash_edge *edge,
                     stl_vertex *a, stl_vertex *b) {
 
-  float diff_x;
-  float diff_y;
-  float diff_z;
-  float max_diff;
+  double diff_x;
+  double diff_y;
+  double diff_z;
+  double max_diff;
 
   if (stl->error) return;
 
@@ -270,7 +270,7 @@ stl_compare_function(stl_hash_edge *edge_a, stl_hash_edge *edge_b) {
 }
 
 void
-stl_check_facets_nearby(stl_file *stl, float tolerance) {
+stl_check_facets_nearby(stl_file *stl, double tolerance) {
   stl_hash_edge  edge[3];
   stl_facet      facet;
   int            i;
@@ -308,11 +308,11 @@ stl_check_facets_nearby(stl_file *stl, float tolerance) {
 
 static int
 stl_load_edge_nearby(stl_file *stl, stl_hash_edge *edge,
-                     stl_vertex *a, stl_vertex *b, float tolerance) {
-  float diff_x;
-  float diff_y;
-  float diff_z;
-  float max_diff;
+                     stl_vertex *a, stl_vertex *b, double tolerance) {
+  double diff_x;
+  double diff_y;
+  double diff_z;
+  double max_diff;
   unsigned vertex1[3];
   unsigned vertex2[3];
 

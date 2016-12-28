@@ -24,7 +24,7 @@ class ConfigOption {
     virtual bool deserialize(std::string str) = 0;
     virtual void set(const ConfigOption &option) = 0;
     virtual int getInt() const { return 0; };
-    virtual double getFloat() const { return 0; };
+    virtual double getdouble() const { return 0; };
     virtual bool getBool() const { return false; };
     virtual void setInt(int val) {};
     friend bool operator== (const ConfigOption &a, const ConfigOption &b);
@@ -71,13 +71,13 @@ class ConfigOptionVector : public ConfigOptionVectorBase
     };
 };
 
-class ConfigOptionFloat : public ConfigOptionSingle<double>
+class ConfigOptiondouble : public ConfigOptionSingle<double>
 {
     public:
-    ConfigOptionFloat() : ConfigOptionSingle<double>(0) {};
-    ConfigOptionFloat(double _value) : ConfigOptionSingle<double>(_value) {};
+    ConfigOptiondouble() : ConfigOptionSingle<double>(0) {};
+    ConfigOptiondouble(double _value) : ConfigOptionSingle<double>(_value) {};
     
-    double getFloat() const { return this->value; };
+    double getdouble() const { return this->value; };
     
     std::string serialize() const {
         std::ostringstream ss;
@@ -92,7 +92,7 @@ class ConfigOptionFloat : public ConfigOptionSingle<double>
     };
 };
 
-class ConfigOptionFloats : public ConfigOptionVector<double>
+class ConfigOptiondoubles : public ConfigOptionVector<double>
 {
     public:
     
@@ -249,11 +249,11 @@ class ConfigOptionStrings : public ConfigOptionVector<std::string>
     };
 };
 
-class ConfigOptionPercent : public ConfigOptionFloat
+class ConfigOptionPercent : public ConfigOptiondouble
 {
     public:
-    ConfigOptionPercent() : ConfigOptionFloat(0) {};
-    ConfigOptionPercent(double _value) : ConfigOptionFloat(_value) {};
+    ConfigOptionPercent() : ConfigOptiondouble(0) {};
+    ConfigOptionPercent(double _value) : ConfigOptiondouble(_value) {};
     
     double get_abs_value(double ratio_over) const {
         return ratio_over * this->value / 100;
@@ -275,16 +275,16 @@ class ConfigOptionPercent : public ConfigOptionFloat
     };
 };
 
-class ConfigOptionFloatOrPercent : public ConfigOptionPercent
+class ConfigOptiondoubleOrPercent : public ConfigOptionPercent
 {
     public:
     bool percent;
-    ConfigOptionFloatOrPercent() : ConfigOptionPercent(0), percent(false) {};
-    ConfigOptionFloatOrPercent(double _value, bool _percent)
+    ConfigOptiondoubleOrPercent() : ConfigOptionPercent(0), percent(false) {};
+    ConfigOptiondoubleOrPercent(double _value, bool _percent)
         : ConfigOptionPercent(_value), percent(_percent) {};
     
     void set(const ConfigOption &option) {
-        const ConfigOptionFloatOrPercent* other = dynamic_cast< const ConfigOptionFloatOrPercent* >(&option);
+        const ConfigOptiondoubleOrPercent* other = dynamic_cast< const ConfigOptiondoubleOrPercent* >(&option);
         if (other != NULL) {
             this->value = other->value;
             this->percent = other->percent;
@@ -487,14 +487,14 @@ class ConfigOptionEnumGeneric : public ConfigOptionInt
 
 enum ConfigOptionType {
     coNone,
-    coFloat,
-    coFloats,
+    codouble,
+    codoubles,
     coInt,
     coInts,
     coString,
     coStrings,
     coPercent,
-    coFloatOrPercent,
+    codoubleOrPercent,
     coPoint,
     coPoints,
     coBool,

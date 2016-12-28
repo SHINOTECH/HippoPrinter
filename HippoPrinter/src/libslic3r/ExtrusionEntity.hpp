@@ -65,8 +65,8 @@ class ExtrusionPath : public ExtrusionEntity
     Polyline polyline;
     ExtrusionRole role;
     double mm3_per_mm;  // mm^3 of plastic per mm of linear head motion
-    float width;
-    float height;
+    double width;
+    double height;
     
     ExtrusionPath(ExtrusionRole role) : role(role), mm3_per_mm(-1), width(-1), height(-1) {};
     ExtrusionPath* clone() const;

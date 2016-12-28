@@ -55,7 +55,7 @@ public:
     stl_file stl;
     bool repaired;
     
-    private:
+private:
     void require_shared_vertices();
     friend class TriangleMeshSlicer;
 };

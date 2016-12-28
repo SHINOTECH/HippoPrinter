@@ -28,7 +28,7 @@
 #include "stl.h"
 
 static void stl_reverse_facet(stl_file *stl, int facet_num);
-static void stl_reverse_vector(float v[]);
+static void stl_reverse_vector(double v[]);
 int stl_check_normal_vector(stl_file *stl, int facet_num, int normal_fix_flag);
 
 static void
@@ -200,8 +200,8 @@ stl_check_normal_vector(stl_file *stl, int facet_num, int normal_fix_flag) {
   /* Returns 2 if the normal is not within tolerance and backwards */
   /* Returns 4 if the status is unknown. */
 
-  float normal[3];
-  float test_norm[3];
+  double normal[3];
+  double test_norm[3];
   stl_facet *facet;
 
   facet = &stl->facet_start[facet_num];
@@ -260,7 +260,7 @@ stl_check_normal_vector(stl_file *stl, int facet_num, int normal_fix_flag) {
 }
 
 static void
-stl_reverse_vector(float v[]) {
+stl_reverse_vector(double v[]) {
   v[0] *= -1;
   v[1] *= -1;
   v[2] *= -1;
@@ -268,9 +268,9 @@ stl_reverse_vector(float v[]) {
 
 
 void
-stl_calculate_normal(float normal[], stl_facet *facet) {
-  float v1[3];
-  float v2[3];
+stl_calculate_normal(double normal[], stl_facet *facet) {
+  double v1[3];
+  double v2[3];
 
   v1[0] = facet->vertex[1].x - facet->vertex[0].x;
   v1[1] = facet->vertex[1].y - facet->vertex[0].y;
@@ -279,15 +279,15 @@ stl_calculate_normal(float normal[], stl_facet *facet) {
   v2[1] = facet->vertex[2].y - facet->vertex[0].y;
   v2[2] = facet->vertex[2].z - facet->vertex[0].z;
 
-  normal[0] = (float)((double)v1[1] * (double)v2[2]) - ((double)v1[2] * (double)v2[1]);
-  normal[1] = (float)((double)v1[2] * (double)v2[0]) - ((double)v1[0] * (double)v2[2]);
-  normal[2] = (float)((double)v1[0] * (double)v2[1]) - ((double)v1[1] * (double)v2[0]);
+  normal[0] = (double)((double)v1[1] * (double)v2[2]) - ((double)v1[2] * (double)v2[1]);
+  normal[1] = (double)((double)v1[2] * (double)v2[0]) - ((double)v1[0] * (double)v2[2]);
+  normal[2] = (double)((double)v1[0] * (double)v2[1]) - ((double)v1[1] * (double)v2[0]);
 }
 
-void stl_normalize_vector(float v[]) {
+void stl_normalize_vector(double v[]) {
   double length;
   double factor;
-  float min_normal_length;
+  double min_normal_length;
 
   length = sqrt((double)v[0] * (double)v[0] + (double)v[1] * (double)v[1] + (double)v[2] * (double)v[2]);
   min_normal_length = 0.000000000001;
@@ -317,7 +317,7 @@ stl_fix_normal_values(stl_file *stl) {
 void
 stl_reverse_all_facets(stl_file *stl) {
   int i;
-  float normal[3];
+  double normal[3];
 
   if (stl->error) return;
 

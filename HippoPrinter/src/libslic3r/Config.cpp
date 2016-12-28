@@ -116,14 +116,14 @@ ConfigBase::set_deserialize(const t_config_option_key &opt_key, std::string str)
 double
 ConfigBase::get_abs_value(const t_config_option_key &opt_key) {
     ConfigOption* opt = this->option(opt_key, false);
-    if (ConfigOptionFloatOrPercent* optv = dynamic_cast<ConfigOptionFloatOrPercent*>(opt)) {
+    if (ConfigOptiondoubleOrPercent* optv = dynamic_cast<ConfigOptiondoubleOrPercent*>(opt)) {
         // get option definition
         const ConfigOptionDef* def = this->def->get(opt_key);
         assert(def != NULL);
         
         // compute absolute value over the absolute value of the base option
         return optv->get_abs_value(this->get_abs_value(def->ratio_over));
-    } else if (ConfigOptionFloat* optv = dynamic_cast<ConfigOptionFloat*>(opt)) {
+    } else if (ConfigOptiondouble* optv = dynamic_cast<ConfigOptiondouble*>(opt)) {
         return optv->value;
     } else {
         throw "Not a valid option type for get_abs_value()";
@@ -133,7 +133,7 @@ ConfigBase::get_abs_value(const t_config_option_key &opt_key) {
 double
 ConfigBase::get_abs_value(const t_config_option_key &opt_key, double ratio_over) {
     // get stored option value
-    ConfigOptionFloatOrPercent* opt = dynamic_cast<ConfigOptionFloatOrPercent*>(this->option(opt_key));
+    ConfigOptiondoubleOrPercent* opt = dynamic_cast<ConfigOptiondoubleOrPercent*>(this->option(opt_key));
     assert(opt != NULL);
     
     // compute absolute value
@@ -202,10 +202,10 @@ DynamicConfig::optptr(const t_config_option_key &opt_key, bool create) {
             const ConfigOptionDef* optdef = this->def->get(opt_key);
             assert(optdef != NULL);
             ConfigOption* opt;
-            if (optdef->type == coFloat) {
-                opt = new ConfigOptionFloat ();
-            } else if (optdef->type == coFloats) {
-                opt = new ConfigOptionFloats ();
+            if (optdef->type == codouble) {
+                opt = new ConfigOptiondouble ();
+            } else if (optdef->type == codoubles) {
+                opt = new ConfigOptiondoubles ();
             } else if (optdef->type == coInt) {
                 opt = new ConfigOptionInt ();
             } else if (optdef->type == coInts) {
@@ -216,8 +216,8 @@ DynamicConfig::optptr(const t_config_option_key &opt_key, bool create) {
                 opt = new ConfigOptionStrings ();
             } else if (optdef->type == coPercent) {
                 opt = new ConfigOptionPercent ();
-            } else if (optdef->type == coFloatOrPercent) {
-                opt = new ConfigOptionFloatOrPercent ();
+            } else if (optdef->type == codoubleOrPercent) {
+                opt = new ConfigOptiondoubleOrPercent ();
             } else if (optdef->type == coPoint) {
                 opt = new ConfigOptionPoint ();
             } else if (optdef->type == coPoints) {

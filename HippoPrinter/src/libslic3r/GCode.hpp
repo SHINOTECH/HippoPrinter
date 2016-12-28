@@ -82,7 +82,7 @@ class GCode {
     const Layer* layer;
     std::map<const PrintObject*,Point> _seam_position;
     bool first_layer; // this flag triggers first layer speeds
-    float elapsed_time; // seconds
+    double elapsed_time; // seconds
     double volumetric_speed;
     
     GCode();

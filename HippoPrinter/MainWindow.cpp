@@ -8,6 +8,7 @@
 #include <QSplitter>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <QListWidget>
 #include <QStackedWidget>
@@ -24,11 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
 	//setMinimumSize(QSize(1000, 800));
 	
 	//初始化菜单和菜单项
-	initActions();	
-	initMenus();
-	initWidgets();
-
-	setCentralWidget(mainSplitter);
+	InitActions();	
+	InitMenus();
+	InitWidgets();
+	InitLayout();
+	
 	setContentsMargins(5, 5, 10, 5);
 	statusBar()->showMessage(tr("Ready"));
 
@@ -38,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 
-void MainWindow::initActions() {
+void MainWindow::InitActions() {
 
 	/*文件菜单下的操作*/
 	//打开模型
@@ -98,7 +99,7 @@ void MainWindow::SetupWindowStyle() {
 	setFocusPolicy(Qt::NoFocus);
 	setWindowOpacity(1.0);
 
-	setWindowIcon(QIcon(":/resources/icon.png"));
+	setWindowIcon(QIcon("icon.png"));
 }
 
 //************************************
@@ -107,7 +108,7 @@ void MainWindow::SetupWindowStyle() {
 // 返回: void
 // 功能: 初始化菜单栏
 //************************************
-void MainWindow::initMenus() {
+void MainWindow::InitMenus() {
 	//文件菜单
 	file_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("文件"));
 	file_menu_->addAction(load_model_action_);
@@ -139,23 +140,31 @@ void MainWindow::initMenus() {
 // 返回: void
 // 功能:
 //************************************
-void MainWindow::initWidgets() {
-	printConfigWidget = new PrintConfigWidget();
-	filConfigWidget = new FilamentConfigWidget();
-	printerConfigWidget = new PrinterConfigWidget();
+void MainWindow::InitWidgets() {
+	print_config_widget_ = new PrintConfigWidget();
+	fila_config_layout_ = new FilamentConfigWidget();
+	printer_config_layout_ = new PrinterConfigWidget();
 
-	leftTabWidget = new QTabWidget();
-	leftTabWidget->addTab(printConfigWidget, QString::fromLocal8Bit("打印设置"));
-	leftTabWidget->addTab(filConfigWidget, QString::fromLocal8Bit("耗材设置"));
-	leftTabWidget->addTab(printerConfigWidget, QString::fromLocal8Bit("打印机设置"));
+	left_tabWidget_ = new QTabWidget();
+	left_tabWidget_->addTab(print_config_widget_, QString::fromLocal8Bit("打印设置"));
+	left_tabWidget_->addTab(fila_config_layout_, QString::fromLocal8Bit("耗材设置"));
+	left_tabWidget_->addTab(printer_config_layout_, QString::fromLocal8Bit("打印机设置"));
 	
-	showWidget = new ShowWidget();
+	show_widget_ = new ShowWidget();
+	central_widget_ = new QWidget();
+	central_widget_layout_ = new QHBoxLayout();
+	central_widget_layout_->addWidget(left_tabWidget_,1);
+	central_widget_layout_->addWidget(show_widget_,6);
 
-	mainSplitter = new QSplitter(Qt::Horizontal,0);
-	mainSplitter->setOpaqueResize(true);
-	mainSplitter->addWidget(leftTabWidget);
-	mainSplitter->addWidget(showWidget);
-	mainSplitter->setStretchFactor(0, 1);
-	mainSplitter->setStretchFactor(1, 3);
 }
 
+//************************************************************************
+// 日期：2016/12/26 
+// 返回: void
+// 功能: 设置窗口布局
+//************************************************************************
+
+void MainWindow::InitLayout() {
+	central_widget_->setLayout(central_widget_layout_);
+	setCentralWidget(central_widget_);
+}

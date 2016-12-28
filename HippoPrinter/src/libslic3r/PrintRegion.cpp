@@ -20,7 +20,7 @@ PrintRegion::print()
 Flow
 PrintRegion::flow(FlowRole role, double layer_height, bool bridge, bool first_layer, double width, const PrintObject &object) const
 {
-    ConfigOptionFloatOrPercent config_width;
+    ConfigOptiondoubleOrPercent config_width;
     if (width != -1) {
         // use the supplied custom width, if any
         config_width.value = width;
@@ -62,7 +62,7 @@ PrintRegion::flow(FlowRole role, double layer_height, bool bridge, bool first_la
     }
     double nozzle_diameter = this->_print->config.nozzle_diameter.get_at(extruder-1);
     
-    return Flow::new_from_config_width(role, config_width, nozzle_diameter, layer_height, bridge ? (float)this->config.bridge_flow_ratio : 0.0);
+    return Flow::new_from_config_width(role, config_width, nozzle_diameter, layer_height, bridge ? (double)this->config.bridge_flow_ratio : 0.0);
 }
 
 }

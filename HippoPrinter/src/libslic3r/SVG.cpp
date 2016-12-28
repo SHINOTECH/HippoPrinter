@@ -1,7 +1,7 @@
 #include "SVG.hpp"
 #include <iostream>
 
-#define COORD(x) ((float)unscale(x)*10)
+#define COORD(x) ((double)unscale(x)*10)
 
 namespace Slic3r {
 

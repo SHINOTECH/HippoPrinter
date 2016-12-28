@@ -111,6 +111,8 @@ class Pointf3 : public Pointf
     double distance_to(const Pointf3 &point) const;
     Pointf3 negative() const;
     Vectorf3 vector_to(const Pointf3 &point) const;
+
+
 };
 
 }

@@ -9,7 +9,7 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QVBoxLayout>
-
+#include <QDebug>
 PrintConfigWidget::PrintConfigWidget(QWidget * parent)
 	:QWidget(parent)
 {
@@ -140,7 +140,7 @@ void PrintConfigWidget::InitWidgets() {
 	pattern_spacing_spinbox_->setValue(2.5);	//默认值
 
 	//支撑材料和模型之间的间隔
-	contact_Zdistance_label_ = new QLabel(QString::fromLocal8Bit("支撑与模型之间的间隔："));
+	contact_Zdistance_label_ = new QLabel(QString::fromLocal8Bit("支撑与模型间隔："));
 	contact_Zdistance_combobox_ = new QComboBox();
 	contact_Zdistance_combobox_->addItem(QString::fromLocal8Bit("0mm(soluble)"));
 	contact_Zdistance_combobox_->addItem(QString::fromLocal8Bit("0.2mm(detachable)"));
@@ -180,7 +180,7 @@ void PrintConfigWidget::InitWidgets() {
 	infill_speed_spinbox_->setValue(60);	//默认值
 
 	//打印间隔的移动速度
-	travel_speed_label_ = new QLabel(QString::fromLocal8Bit("打印间隔移动速度："));
+	travel_speed_label_ = new QLabel(QString::fromLocal8Bit("间隔移动速度："));
 	travel_speed_spinbox_ = new QSpinBox();
 	travel_speed_spinbox_->setSuffix(QString::fromLocal8Bit("mm/s"));
 	travel_speed_spinbox_->setSingleStep(1);
@@ -188,7 +188,14 @@ void PrintConfigWidget::InitWidgets() {
 	travel_speed_spinbox_->setValue(60);	//默认值
 }
 
+//************************************************************************
+// 日期：2016/12/26 
+// 返回: void
+// 功能: 设置控件布局
+//************************************************************************
+
 void PrintConfigWidget::InitLayout() {
+
 	//基本参数设置布局初始化
 	general_config_layout_->addWidget(layer_height_label_, 0, 0);
 	general_config_layout_->addWidget(layer_height_spinbox_, 0, 1);
@@ -196,7 +203,7 @@ void PrintConfigWidget::InitLayout() {
 	general_config_layout_->addWidget(perimeter_spinbox_, 1, 1);
 	general_config_layout_->addWidget(solid_layer_label_, 2, 0);
 	general_config_layout_->addWidget(top_solid_spinbox_, 2, 1);
-	general_config_layout_->addWidget(bottom_solid_spinbox_, 2, 2);
+	general_config_layout_->addWidget(bottom_solid_spinbox_, 3, 1);
 	general_groupbox_->setLayout(general_config_layout_);
 
 	//填充参数设置布局初始化

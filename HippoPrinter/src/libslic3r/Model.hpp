@@ -125,7 +125,7 @@ class ModelObject
     void translate(const Vectorf3 &vector);
     void translate(coordf_t x, coordf_t y, coordf_t z);
     void scale(const Pointf3 &versor);
-    void rotate(float angle, const Axis &axis);
+    void rotate(double angle, const Axis &axis);
     void mirror(const Axis &axis);
     size_t materials_count() const;
     size_t facets_count() const;

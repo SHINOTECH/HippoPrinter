@@ -32,9 +32,9 @@
 #endif // !
 
 
-static void stl_rotate(float *x, float *y, float angle);
-static float get_area(stl_facet *facet);
-static float get_volume(stl_file *stl);
+static void stl_rotate(double *x, double *y, double angle);
+static double get_area(stl_facet *facet);
+static double get_volume(stl_file *stl);
 
 
 void
@@ -79,7 +79,7 @@ stl_verify_neighbors(stl_file *stl) {
 }
 
 void
-stl_translate(stl_file *stl, float x, float y, float z) {
+stl_translate(stl_file *stl, double x, double y, double z) {
   int i;
   int j;
 
@@ -104,7 +104,7 @@ stl_translate(stl_file *stl, float x, float y, float z) {
 
 /* Translates the stl by x,y,z, relatively from wherever it is currently */
 void
-stl_translate_relative(stl_file *stl, float x, float y, float z) {
+stl_translate_relative(stl_file *stl, double x, double y, double z) {
   int i;
   int j;
 
@@ -128,7 +128,7 @@ stl_translate_relative(stl_file *stl, float x, float y, float z) {
 }
 
 void
-stl_scale_versor(stl_file *stl, float versor[3]) {
+stl_scale_versor(stl_file *stl, double versor[3]) {
   int i;
   int j;
 
@@ -164,8 +164,8 @@ stl_scale_versor(stl_file *stl, float versor[3]) {
 }
 
 void
-stl_scale(stl_file *stl, float factor) {
-  float versor[3];
+stl_scale(stl_file *stl, double factor) {
+  double versor[3];
 
   if (stl->error) return;
 
@@ -177,7 +177,7 @@ stl_scale(stl_file *stl, float factor) {
 
 static void calculate_normals(stl_file *stl) {
   long i;
-  float normal[3];
+  double normal[3];
 
   if (stl->error) return;
 
@@ -191,7 +191,7 @@ static void calculate_normals(stl_file *stl) {
 }
 
 void
-stl_rotate_x(stl_file *stl, float angle) {
+stl_rotate_x(stl_file *stl, double angle) {
   int i;
   int j;
 
@@ -208,7 +208,7 @@ stl_rotate_x(stl_file *stl, float angle) {
 }
 
 void
-stl_rotate_y(stl_file *stl, float angle) {
+stl_rotate_y(stl_file *stl, double angle) {
   int i;
   int j;
 
@@ -225,7 +225,7 @@ stl_rotate_y(stl_file *stl, float angle) {
 }
 
 void
-stl_rotate_z(stl_file *stl, float angle) {
+stl_rotate_z(stl_file *stl, double angle) {
   int i;
   int j;
 
@@ -244,7 +244,7 @@ stl_rotate_z(stl_file *stl, float angle) {
 
 
 static void
-stl_rotate(float *x, float *y, float angle) {
+stl_rotate(double *x, double *y, double angle) {
   double r;
   double theta;
   double radian_angle;
@@ -302,7 +302,7 @@ void
 stl_mirror_xy(stl_file *stl) {
   int i;
   int j;
-  float temp_size;
+  double temp_size;
 
   if (stl->error) return;
 
@@ -324,7 +324,7 @@ void
 stl_mirror_yz(stl_file *stl) {
   int i;
   int j;
-  float temp_size;
+  double temp_size;
 
   if (stl->error) return;
 
@@ -346,7 +346,7 @@ void
 stl_mirror_xz(stl_file *stl) {
   int i;
   int j;
-  float temp_size;
+  double temp_size;
 
   if (stl->error) return;
 
@@ -364,14 +364,14 @@ stl_mirror_xz(stl_file *stl) {
   stl->stats.facets_reversed -= stl->stats.number_of_facets;  /* for not altering stats */
 }
 
-static float get_volume(stl_file *stl) {
+static double get_volume(stl_file *stl) {
   long i;
   stl_vertex p0;
   stl_vertex p;
   stl_normal n;
-  float height;
-  float area;
-  float volume = 0.0;
+  double height;
+  double area;
+  double volume = 0.0;
 
   if (stl->error) return 0;
 
@@ -402,11 +402,11 @@ void stl_calculate_volume(stl_file *stl) {
   }
 }
 
-static float get_area(stl_facet *facet) {
+static double get_area(stl_facet *facet) {
   double cross[3][3];
-  float sum[3];
-  float n[3];
-  float area;
+  double sum[3];
+  double n[3];
+  double area;
   int i;
 
   /* cast to double before calculating cross product because large coordinates
@@ -437,9 +437,9 @@ void stl_repair(stl_file *stl,
                 int fixall_flag,
                 int exact_flag,
                 int tolerance_flag,
-                float tolerance,
+                double tolerance,
                 int increment_flag,
-                float increment,
+                double increment,
                 int nearby_flag,
                 int iterations,
                 int remove_unconnected_flag,

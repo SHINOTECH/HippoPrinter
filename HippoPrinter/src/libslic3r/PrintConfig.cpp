@@ -52,13 +52,13 @@ PrintConfigDef::PrintConfigDef()
     def->min = 0;
     def->default_value = new ConfigOptionInt(3);
 
-    def = this->add("bridge_acceleration", coFloat);
+    def = this->add("bridge_acceleration", codouble);
     def->label = "Bridge";
     def->tooltip = "This is the acceleration your printer will use for bridges. Set zero to disable acceleration control for bridges.";
     def->sidetext = "mm/s²";
     def->cli = "bridge-acceleration=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("bridge_fan_speed", coInt);
     def->label = "Bridges fan speed";
@@ -69,15 +69,15 @@ PrintConfigDef::PrintConfigDef()
     def->max = 100;
     def->default_value = new ConfigOptionInt(100);
 
-    def = this->add("bridge_flow_ratio", coFloat);
+    def = this->add("bridge_flow_ratio", codouble);
     def->label = "Bridge flow ratio";
     def->category = "Advanced";
     def->tooltip = "This factor affects the amount of plastic for bridging. You can decrease it slightly to pull the extrudates and prevent sagging, although default settings are usually good and you should experiment with cooling (use a fan) before tweaking this.";
     def->cli = "bridge-flow-ratio=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(1);
+    def->default_value = new ConfigOptiondouble(1);
 
-    def = this->add("bridge_speed", coFloat);
+    def = this->add("bridge_speed", codouble);
     def->label = "Bridges";
     def->category = "Speed";
     def->tooltip = "Speed for printing bridges.";
@@ -85,15 +85,15 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "bridge-speed=f";
     def->aliases.push_back("bridge_feed_rate");
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(60);
+    def->default_value = new ConfigOptiondouble(60);
 
-    def = this->add("brim_width", coFloat);
+    def = this->add("brim_width", codouble);
     def->label = "Brim width";
     def->tooltip = "Horizontal width of the brim that will be printed around each object on the first layer.";
     def->sidetext = "mm";
     def->cli = "brim-width=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("complete_objects", coBool);
     def->label = "Complete individual objects";
@@ -107,13 +107,13 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "cooling!";
     def->default_value = new ConfigOptionBool(true);
 
-    def = this->add("default_acceleration", coFloat);
+    def = this->add("default_acceleration", codouble);
     def->label = "Default";
     def->tooltip = "This is the acceleration your printer will be reset to after the role-specific acceleration values are used (perimeter/infill). Set zero to prevent resetting acceleration at all.";
     def->sidetext = "mm/s²";
     def->cli = "default-acceleration=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("disable_fan_first_layers", coInt);
     def->label = "Disable fan for the first";
@@ -131,14 +131,14 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "dont-support-bridges!";
     def->default_value = new ConfigOptionBool(true);
 
-    def = this->add("duplicate_distance", coFloat);
+    def = this->add("duplicate_distance", codouble);
     def->label = "Distance between copies";
     def->tooltip = "Distance used for the auto-arrange feature of the plater.";
     def->sidetext = "mm";
     def->cli = "duplicate-distance=f";
     def->aliases.push_back("multiply_distance");
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(6);
+    def->default_value = new ConfigOptiondouble(6);
 
     def = this->add("end_gcode", coString);
     def->label = "End G-code";
@@ -168,15 +168,15 @@ PrintConfigDef::PrintConfigDef()
     def->aliases.push_back("solid_fill_pattern");
     def->default_value = new ConfigOptionEnum<InfillPattern>(ipRectilinear);
 
-    def = this->add("external_perimeter_extrusion_width", coFloatOrPercent);
+    def = this->add("external_perimeter_extrusion_width", codoubleOrPercent);
     def->label = "External perimeters";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for external perimeters. If left zero, an automatic value will be used that maximizes accuracy of the external visible surfaces. If expressed as percentage (for example 200%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "external-perimeter-extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
-    def = this->add("external_perimeter_speed", coFloatOrPercent);
+    def = this->add("external_perimeter_speed", codoubleOrPercent);
     def->label = "External perimeters";
     def->category = "Speed";
     def->tooltip = "This separate setting will affect the speed of external perimeters (the visible ones). If expressed as percentage (for example: 80%) it will be calculated on the perimeters speed setting above. Set to zero for auto.";
@@ -184,7 +184,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "external-perimeter-speed=s";
     def->ratio_over = "perimeter_speed";
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(50, true);
+    def->default_value = new ConfigOptiondoubleOrPercent(50, true);
 
     def = this->add("external_perimeters_first", coBool);
     def->label = "External perimeters first";
@@ -213,21 +213,21 @@ PrintConfigDef::PrintConfigDef()
     def->enum_labels.push_back("3");
     def->enum_labels.push_back("4");
 
-    def = this->add("extruder_clearance_height", coFloat);
+    def = this->add("extruder_clearance_height", codouble);
     def->label = "Height";
     def->tooltip = "Set this to the vertical distance between your nozzle tip and (usually) the X carriage rods. In other words, this is the height of the clearance cylinder around your extruder, and it represents the maximum depth the extruder can peek before colliding with other printed objects.";
     def->sidetext = "mm";
     def->cli = "extruder-clearance-height=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(20);
+    def->default_value = new ConfigOptiondouble(20);
 
-    def = this->add("extruder_clearance_radius", coFloat);
+    def = this->add("extruder_clearance_radius", codouble);
     def->label = "Radius";
     def->tooltip = "Set this to the clearance radius around your extruder. If the extruder is not centered, choose the largest value for safety. This setting is used to check for collisions and to display the graphical preview in the plater.";
     def->sidetext = "mm";
     def->cli = "extruder-clearance-radius=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(20);
+    def->default_value = new ConfigOptiondouble(20);
 
     def = this->add("extruder_offset", coPoints);
     def->label = "Extruder offset";
@@ -246,23 +246,23 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "extrusion-axis=s";
     def->default_value = new ConfigOptionString("E");
 
-    def = this->add("extrusion_multiplier", coFloats);
+    def = this->add("extrusion_multiplier", codoubles);
     def->label = "Extrusion multiplier";
     def->tooltip = "This factor changes the amount of flow proportionally. You may need to tweak this setting to get nice surface finish and correct single wall widths. Usual values are between 0.9 and 1.1. If you think you need to change this more, check filament diameter and your firmware E steps.";
     def->cli = "extrusion-multiplier=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(1);
         def->default_value = opt;
     }
     
-    def = this->add("extrusion_width", coFloatOrPercent);
+    def = this->add("extrusion_width", codoubleOrPercent);
     def->label = "Default extrusion width";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width. If left to zero, Slic3r calculates a width automatically. If expressed as percentage (for example: 230%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for auto)";
     def->cli = "extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
     def = this->add("fan_always_on", coBool);
     def->label = "Keep fan always on";
@@ -291,14 +291,14 @@ PrintConfigDef::PrintConfigDef()
         def->default_value = opt;
     }
 
-    def = this->add("filament_diameter", coFloats);
+    def = this->add("filament_diameter", codoubles);
     def->label = "Diameter";
     def->tooltip = "Enter your filament diameter here. Good precision is required, so use a caliper and do multiple measurements along the filament, then compute the average.";
     def->sidetext = "mm";
     def->cli = "filament-diameter=f@";
     def->min = 0;
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(3);
         def->default_value = opt;
     }
@@ -306,7 +306,7 @@ PrintConfigDef::PrintConfigDef()
     def = this->add("filament_settings_id", coString);
     def->default_value = new ConfigOptionString("");
     
-    def = this->add("fill_angle", coFloat);
+    def = this->add("fill_angle", codouble);
     def->label = "Fill angle";
     def->category = "Infill";
     def->tooltip = "Default base angle for infill orientation. Cross-hatching will be applied to this. Bridges will be infilled using the best direction Slic3r can detect, so this setting does not affect them.";
@@ -314,7 +314,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "fill-angle=i";
     def->min = 0;
     def->max = 359;
-    def->default_value = new ConfigOptionFloat(45);
+    def->default_value = new ConfigOptiondouble(45);
 
     def = this->add("fill_density", coPercent);
     def->gui_type = "f_enum_open";
@@ -382,13 +382,13 @@ PrintConfigDef::PrintConfigDef()
     def->enum_labels.push_back("Octagram Spiral");
     def->default_value = new ConfigOptionEnum<InfillPattern>(ipHoneycomb);
 
-    def = this->add("first_layer_acceleration", coFloat);
+    def = this->add("first_layer_acceleration", codouble);
     def->label = "First layer";
     def->tooltip = "This is the acceleration your printer will use for first layer. Set zero to disable acceleration control for first layer.";
     def->sidetext = "mm/s²";
     def->cli = "first-layer-acceleration=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("first_layer_bed_temperature", coInt);
     def->label = "First layer";
@@ -398,31 +398,31 @@ PrintConfigDef::PrintConfigDef()
     def->max = 300;
     def->default_value = new ConfigOptionInt(0);
 
-    def = this->add("first_layer_extrusion_width", coFloatOrPercent);
+    def = this->add("first_layer_extrusion_width", codoubleOrPercent);
     def->label = "First layer";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for first layer. You can use this to force fatter extrudates for better adhesion. If expressed as percentage (for example 120%) it will be computed over first layer height. If set to zero, it will use the Default Extrusion Width.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "first-layer-extrusion-width=s";
     def->ratio_over = "first_layer_height";
-    def->default_value = new ConfigOptionFloatOrPercent(200, true);
+    def->default_value = new ConfigOptiondoubleOrPercent(200, true);
 
-    def = this->add("first_layer_height", coFloatOrPercent);
+    def = this->add("first_layer_height", codoubleOrPercent);
     def->label = "First layer height";
     def->category = "Layers and Perimeters";
     def->tooltip = "When printing with very low layer heights, you might still want to print a thicker bottom layer to improve adhesion and tolerance for non perfect build plates. This can be expressed as an absolute value or as a percentage (for example: 150%) over the default layer height.";
     def->sidetext = "mm or %";
     def->cli = "first-layer-height=s";
     def->ratio_over = "layer_height";
-    def->default_value = new ConfigOptionFloatOrPercent(0.35, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0.35, false);
 
-    def = this->add("first_layer_speed", coFloatOrPercent);
+    def = this->add("first_layer_speed", codoubleOrPercent);
     def->label = "First layer speed";
     def->tooltip = "If expressed as absolute value in mm/s, this speed will be applied to all the print moves of the first layer, regardless of their type. If expressed as a percentage (for example: 40%) it will scale the default speeds.";
     def->sidetext = "mm/s or %";
     def->cli = "first-layer-speed=s";
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(30, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(30, false);
 
     def = this->add("first_layer_temperature", coInts);
     def->label = "First layer";
@@ -436,14 +436,14 @@ PrintConfigDef::PrintConfigDef()
         def->default_value = opt;
     }
     
-    def = this->add("gap_fill_speed", coFloat);
+    def = this->add("gap_fill_speed", codouble);
     def->label = "Gap fill";
     def->category = "Speed";
     def->tooltip = "Speed for filling small gaps using short zigzag moves. Keep this reasonably low to avoid too much shaking and resonance issues. Set zero to disable gaps filling.";
     def->sidetext = "mm/s";
     def->cli = "gap-fill-speed=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(20);
+    def->default_value = new ConfigOptiondouble(20);
 
     def = this->add("gcode_arcs", coBool);
     def->label = "Use native G-code arcs";
@@ -478,13 +478,13 @@ PrintConfigDef::PrintConfigDef()
     def->enum_labels.push_back("No extrusion");
     def->default_value = new ConfigOptionEnum<GCodeFlavor>(gcfRepRap);
 
-    def = this->add("infill_acceleration", coFloat);
+    def = this->add("infill_acceleration", codouble);
     def->label = "Infill";
     def->tooltip = "This is the acceleration your printer will use for infill. Set zero to disable acceleration control for infill.";
     def->sidetext = "mm/s²";
     def->cli = "infill-acceleration=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("infill_every_layers", coInt);
     def->label = "Combine infill every";
@@ -504,13 +504,13 @@ PrintConfigDef::PrintConfigDef()
     def->min = 1;
     def->default_value = new ConfigOptionInt(1);
 
-    def = this->add("infill_extrusion_width", coFloatOrPercent);
+    def = this->add("infill_extrusion_width", codoubleOrPercent);
     def->label = "Infill";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for infill. You may want to use fatter extrudates to speed up the infill and make your parts stronger. If expressed as percentage (for example 90%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "infill-extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
     def = this->add("infill_first", coBool);
     def->label = "Infill before perimeters";
@@ -525,16 +525,16 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "infill-only-where-needed!";
     def->default_value = new ConfigOptionBool(false);
 
-    def = this->add("infill_overlap", coFloatOrPercent);
+    def = this->add("infill_overlap", codoubleOrPercent);
     def->label = "Infill/perimeters overlap";
     def->category = "Advanced";
     def->tooltip = "This setting applies an additional overlap between infill and perimeters for better bonding. Theoretically this shouldn't be needed, but backlash might cause gaps. If expressed as percentage (example: 15%) it is calculated over perimeter extrusion width.";
     def->sidetext = "mm or %";
     def->cli = "infill-overlap=s";
     def->ratio_over = "perimeter_extrusion_width";
-    def->default_value = new ConfigOptionFloatOrPercent(15, true);
+    def->default_value = new ConfigOptiondoubleOrPercent(15, true);
 
-    def = this->add("infill_speed", coFloat);
+    def = this->add("infill_speed", codouble);
     def->label = "Infill";
     def->category = "Speed";
     def->tooltip = "Speed for printing the internal fill. Set to zero for auto.";
@@ -543,7 +543,7 @@ PrintConfigDef::PrintConfigDef()
     def->aliases.push_back("print_feed_rate");
     def->aliases.push_back("infill_feed_rate");
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(80);
+    def->default_value = new ConfigOptiondouble(80);
 
     def = this->add("interface_shells", coBool);
     def->label = "Interface shells";
@@ -561,14 +561,14 @@ PrintConfigDef::PrintConfigDef()
     def->height = 50;
     def->default_value = new ConfigOptionString("");
 
-    def = this->add("layer_height", coFloat);
+    def = this->add("layer_height", codouble);
     def->label = "Layer height";
     def->category = "Layers and Perimeters";
     def->tooltip = "This setting controls the height (and thus the total number) of the slices/layers. Thinner layers give better accuracy but take more time to print.";
     def->sidetext = "mm";
     def->cli = "layer-height=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0.3);
+    def->default_value = new ConfigOptiondouble(0.3);
 
     def = this->add("max_fan_speed", coInt);
     def->label = "Max";
@@ -579,21 +579,21 @@ PrintConfigDef::PrintConfigDef()
     def->max = 100;
     def->default_value = new ConfigOptionInt(100);
 
-    def = this->add("max_print_speed", coFloat);
+    def = this->add("max_print_speed", codouble);
     def->label = "Max print speed";
     def->tooltip = "When setting other speed settings to 0 Slic3r will autocalculate the optimal speed in order to keep constant extruder pressure. This experimental setting is used to set the highest print speed you want to allow.";
     def->sidetext = "mm/s";
     def->cli = "max-print-speed=f";
     def->min = 1;
-    def->default_value = new ConfigOptionFloat(80);
+    def->default_value = new ConfigOptiondouble(80);
 
-    def = this->add("max_volumetric_speed", coFloat);
+    def = this->add("max_volumetric_speed", codouble);
     def->label = "Max volumetric speed";
     def->tooltip = "This experimental setting is used to set the maximum volumetric speed your extruder supports.";
     def->sidetext = "mm³/s";
     def->cli = "max-volumetric-speed=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("min_fan_speed", coInt);
     def->label = "Min";
@@ -604,21 +604,21 @@ PrintConfigDef::PrintConfigDef()
     def->max = 100;
     def->default_value = new ConfigOptionInt(35);
 
-    def = this->add("min_print_speed", coFloat);
+    def = this->add("min_print_speed", codouble);
     def->label = "Min print speed";
     def->tooltip = "Slic3r will not scale speed down below this speed.";
     def->sidetext = "mm/s";
     def->cli = "min-print-speed=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(10);
+    def->default_value = new ConfigOptiondouble(10);
 
-    def = this->add("min_skirt_length", coFloat);
+    def = this->add("min_skirt_length", codouble);
     def->label = "Minimum extrusion length";
     def->tooltip = "Generate no less than the number of skirt loops required to consume the specified amount of filament on the bottom layer. For multi-extruder machines, this minimum applies to each extruder.";
     def->sidetext = "mm";
     def->cli = "min-skirt-length=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("notes", coString);
     def->label = "Configuration notes";
@@ -629,13 +629,13 @@ PrintConfigDef::PrintConfigDef()
     def->height = 130;
     def->default_value = new ConfigOptionString("");
 
-    def = this->add("nozzle_diameter", coFloats);
+    def = this->add("nozzle_diameter", codoubles);
     def->label = "Nozzle diameter";
     def->tooltip = "This is the diameter of your extruder nozzle (for example: 0.5, 0.35 etc.)";
     def->sidetext = "mm";
     def->cli = "nozzle-diameter=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0.5);
         def->default_value = opt;
     }
@@ -678,12 +678,12 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "overhangs!";
     def->default_value = new ConfigOptionBool(true);
 
-    def = this->add("perimeter_acceleration", coFloat);
+    def = this->add("perimeter_acceleration", codouble);
     def->label = "Perimeters";
     def->tooltip = "This is the acceleration your printer will use for perimeters. A high value like 9000 usually gives good results if your hardware is up to the job. Set zero to disable acceleration control for perimeters.";
     def->sidetext = "mm/s²";
     def->cli = "perimeter-acceleration=f";
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("perimeter_extruder", coInt);
     def->label = "Perimeter extruder";
@@ -694,16 +694,16 @@ PrintConfigDef::PrintConfigDef()
     def->min = 1;
     def->default_value = new ConfigOptionInt(1);
 
-    def = this->add("perimeter_extrusion_width", coFloatOrPercent);
+    def = this->add("perimeter_extrusion_width", codoubleOrPercent);
     def->label = "Perimeters";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for perimeters. You may want to use thinner extrudates to get more accurate surfaces. If expressed as percentage (for example 200%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "perimeter-extrusion-width=s";
     def->aliases.push_back("perimeters_extrusion_width");
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
-    def = this->add("perimeter_speed", coFloat);
+    def = this->add("perimeter_speed", codouble);
     def->label = "Perimeters";
     def->category = "Speed";
     def->tooltip = "Speed for perimeters (contours, aka vertical shells). Set to zero for auto.";
@@ -711,7 +711,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "perimeter-speed=f";
     def->aliases.push_back("perimeter_feed_rate");
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(60);
+    def->default_value = new ConfigOptiondouble(60);
 
     def = this->add("perimeters", coInt);
     def->label = "Perimeters";
@@ -738,12 +738,12 @@ PrintConfigDef::PrintConfigDef()
     def = this->add("printer_settings_id", coString);
     def->default_value = new ConfigOptionString("");
 
-    def = this->add("pressure_advance", coFloat);
+    def = this->add("pressure_advance", codouble);
     def->label = "Pressure advance";
     def->tooltip = "When set to a non-zero value, this experimental option enables pressure regulation. It's the K constant for the advance algorithm that pushes more or less filament upon speed changes. It's useful for Bowden-tube extruders. Reasonable values are in range 0-10.";
     def->cli = "pressure-advance=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("raft_layers", coInt);
     def->label = "Raft layers";
@@ -754,21 +754,21 @@ PrintConfigDef::PrintConfigDef()
     def->min = 0;
     def->default_value = new ConfigOptionInt(0);
 
-    def = this->add("resolution", coFloat);
+    def = this->add("resolution", codouble);
     def->label = "Resolution";
     def->tooltip = "Minimum detail resolution, used to simplify the input file for speeding up the slicing job and reducing memory usage. High-resolution models often carry more detail than printers can render. Set to zero to disable any simplification and use full resolution from input.";
     def->sidetext = "mm";
     def->cli = "resolution=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
-    def = this->add("retract_before_travel", coFloats);
+    def = this->add("retract_before_travel", codoubles);
     def->label = "Minimum travel after retraction";
     def->tooltip = "Retraction is not triggered when travel moves are shorter than this length.";
     def->sidetext = "mm";
     def->cli = "retract-before-travel=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(2);
         def->default_value = opt;
     }
@@ -783,95 +783,95 @@ PrintConfigDef::PrintConfigDef()
         def->default_value = opt;
     }
 
-    def = this->add("retract_length", coFloats);
+    def = this->add("retract_length", codoubles);
     def->label = "Length";
     def->full_label = "Retraction Length";
     def->tooltip = "When retraction is triggered, filament is pulled back by the specified amount (the length is measured on raw filament, before it enters the extruder).";
     def->sidetext = "mm (zero to disable)";
     def->cli = "retract-length=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(2);
         def->default_value = opt;
     }
 
-    def = this->add("retract_length_toolchange", coFloats);
+    def = this->add("retract_length_toolchange", codoubles);
     def->label = "Length";
     def->full_label = "Retraction Length (Toolchange)";
     def->tooltip = "When retraction is triggered before changing tool, filament is pulled back by the specified amount (the length is measured on raw filament, before it enters the extruder).";
     def->sidetext = "mm (zero to disable)";
     def->cli = "retract-length-toolchange=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(10);
         def->default_value = opt;
     }
 
-    def = this->add("retract_lift", coFloats);
+    def = this->add("retract_lift", codoubles);
     def->label = "Lift Z";
     def->tooltip = "If you set this to a positive value, Z is quickly raised every time a retraction is triggered. When using multiple extruders, only the setting for the first extruder will be considered.";
     def->sidetext = "mm";
     def->cli = "retract-lift=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0);
         def->default_value = opt;
     }
 
-    def = this->add("retract_lift_above", coFloats);
+    def = this->add("retract_lift_above", codoubles);
     def->label = "Above Z";
     def->full_label = "Only lift Z above";
     def->tooltip = "If you set this to a positive value, Z lift will only take place above the specified absolute Z. You can tune this setting for skipping lift on the first layers.";
     def->sidetext = "mm";
     def->cli = "retract-lift-above=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0);
         def->default_value = opt;
     }
 
-    def = this->add("retract_lift_below", coFloats);
+    def = this->add("retract_lift_below", codoubles);
     def->label = "Below Z";
     def->full_label = "Only lift Z below";
     def->tooltip = "If you set this to a positive value, Z lift will only take place below the specified absolute Z. You can tune this setting for limiting lift to the first layers.";
     def->sidetext = "mm";
     def->cli = "retract-lift-below=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0);
         def->default_value = opt;
     }
 
-    def = this->add("retract_restart_extra", coFloats);
+    def = this->add("retract_restart_extra", codoubles);
     def->label = "Extra length on restart";
     def->tooltip = "When the retraction is compensated after the travel move, the extruder will push this additional amount of filament. This setting is rarely needed.";
     def->sidetext = "mm";
     def->cli = "retract-restart-extra=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0);
         def->default_value = opt;
     }
 
-    def = this->add("retract_restart_extra_toolchange", coFloats);
+    def = this->add("retract_restart_extra_toolchange", codoubles);
     def->label = "Extra length on restart";
     def->tooltip = "When the retraction is compensated after changing tool, the extruder will push this additional amount of filament.";
     def->sidetext = "mm";
     def->cli = "retract-restart-extra-toolchange=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(0);
         def->default_value = opt;
     }
 
-    def = this->add("retract_speed", coFloats);
+    def = this->add("retract_speed", codoubles);
     def->label = "Speed";
     def->full_label = "Retraction Speed";
     def->tooltip = "The speed for retractions (it only applies to the extruder motor).";
     def->sidetext = "mm/s";
     def->cli = "retract-speed=f@";
     {
-        ConfigOptionFloats* opt = new ConfigOptionFloats();
+        ConfigOptiondoubles* opt = new ConfigOptiondoubles();
         opt->values.push_back(40);
         def->default_value = opt;
     }
@@ -911,13 +911,13 @@ PrintConfigDef::PrintConfigDef()
     def->enum_values.push_back("250000");
     def->default_value = new ConfigOptionInt(250000);
 
-    def = this->add("skirt_distance", coFloat);
+    def = this->add("skirt_distance", codouble);
     def->label = "Distance from object";
     def->tooltip = "Distance between skirt and object(s). Set this to zero to attach the skirt to the object(s) and get a brim for better adhesion.";
     def->sidetext = "mm";
     def->cli = "skirt-distance=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(6);
+    def->default_value = new ConfigOptiondouble(6);
 
     def = this->add("skirt_height", coInt);
     def->label = "Skirt height";
@@ -944,7 +944,7 @@ PrintConfigDef::PrintConfigDef()
     def->max = 1000;
     def->default_value = new ConfigOptionInt(5);
 
-    def = this->add("small_perimeter_speed", coFloatOrPercent);
+    def = this->add("small_perimeter_speed", codoubleOrPercent);
     def->label = "Small perimeters";
     def->category = "Speed";
     def->tooltip = "This separate setting will affect the speed of perimeters having radius <= 6.5mm (usually holes). If expressed as percentage (for example: 80%) it will be calculated on the perimeters speed setting above. Set to zero for auto.";
@@ -952,16 +952,16 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "small-perimeter-speed=s";
     def->ratio_over = "perimeter_speed";
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(15, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(15, false);
 
-    def = this->add("solid_infill_below_area", coFloat);
+    def = this->add("solid_infill_below_area", codouble);
     def->label = "Solid infill threshold area";
     def->category = "Infill";
     def->tooltip = "Force solid infill for regions having a smaller area than the specified threshold.";
     def->sidetext = "mm²";
     def->cli = "solid-infill-below-area=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(70);
+    def->default_value = new ConfigOptiondouble(70);
 
     def = this->add("solid_infill_extruder", coInt);
     def->label = "Solid infill extruder";
@@ -980,15 +980,15 @@ PrintConfigDef::PrintConfigDef()
     def->min = 0;
     def->default_value = new ConfigOptionInt(0);
 
-    def = this->add("solid_infill_extrusion_width", coFloatOrPercent);
+    def = this->add("solid_infill_extrusion_width", codoubleOrPercent);
     def->label = "Solid infill";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for infill for solid surfaces. If expressed as percentage (for example 90%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "solid-infill-extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
-    def = this->add("solid_infill_speed", coFloatOrPercent);
+    def = this->add("solid_infill_speed", codoubleOrPercent);
     def->label = "Solid infill";
     def->category = "Speed";
     def->tooltip = "Speed for printing solid regions (top/bottom/internal horizontal shells). This can be expressed as a percentage (for example: 80%) over the default infill speed above. Set to zero for auto.";
@@ -997,7 +997,7 @@ PrintConfigDef::PrintConfigDef()
     def->ratio_over = "infill_speed";
     def->aliases.push_back("solid_infill_feed_rate");
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(20, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(20, false);
 
     def = this->add("solid_layers", coInt);
     def->label = "Solid layers";
@@ -1048,7 +1048,7 @@ PrintConfigDef::PrintConfigDef()
     def->max = 359;
     def->default_value = new ConfigOptionInt(0);
 
-    def = this->add("support_material_contact_distance", coFloat);
+    def = this->add("support_material_contact_distance", codouble);
     def->gui_type = "f_enum_open";
     def->label = "Contact Z distance";
     def->category = "Support material";
@@ -1060,7 +1060,7 @@ PrintConfigDef::PrintConfigDef()
     def->enum_values.push_back("0.2");
     def->enum_labels.push_back("0 (soluble)");
     def->enum_labels.push_back("0.2 (detachable)");
-    def->default_value = new ConfigOptionFloat(0.2);
+    def->default_value = new ConfigOptiondouble(0.2);
 
     def = this->add("support_material_enforce_layers", coInt);
     def->label = "Enforce support for the first";
@@ -1080,13 +1080,13 @@ PrintConfigDef::PrintConfigDef()
     def->min = 1;
     def->default_value = new ConfigOptionInt(1);
 
-    def = this->add("support_material_extrusion_width", coFloatOrPercent);
+    def = this->add("support_material_extrusion_width", codoubleOrPercent);
     def->label = "Support material";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for support material. If expressed as percentage (for example 90%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "support-material-extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
     def = this->add("support_material_interface_extruder", coInt);
     def->label = "Support material/raft interface extruder";
@@ -1105,16 +1105,16 @@ PrintConfigDef::PrintConfigDef()
     def->min = 0;
     def->default_value = new ConfigOptionInt(3);
 
-    def = this->add("support_material_interface_spacing", coFloat);
+    def = this->add("support_material_interface_spacing", codouble);
     def->label = "Interface pattern spacing";
     def->category = "Support material";
     def->tooltip = "Spacing between interface lines. Set zero to get a solid interface.";
     def->sidetext = "mm";
     def->cli = "support-material-interface-spacing=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
-    def = this->add("support_material_interface_speed", coFloatOrPercent);
+    def = this->add("support_material_interface_speed", codoubleOrPercent);
     def->label = "Support material interface";
     def->category = "Support material";
     def->tooltip = "Speed for printing support material interface layers. If expressed as percentage (for example 50%) it will be calculated over support material speed.";
@@ -1122,7 +1122,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "support-material-interface-speed=s";
     def->ratio_over = "support_material_speed";
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(100, true);
+    def->default_value = new ConfigOptiondoubleOrPercent(100, true);
 
     def = this->add("support_material_pattern", coEnum);
     def->label = "Pattern";
@@ -1140,23 +1140,23 @@ PrintConfigDef::PrintConfigDef()
     def->enum_labels.push_back("pillars");
     def->default_value = new ConfigOptionEnum<SupportMaterialPattern>(smpPillars);
 
-    def = this->add("support_material_spacing", coFloat);
+    def = this->add("support_material_spacing", codouble);
     def->label = "Pattern spacing";
     def->category = "Support material";
     def->tooltip = "Spacing between support material lines.";
     def->sidetext = "mm";
     def->cli = "support-material-spacing=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(2.5);
+    def->default_value = new ConfigOptiondouble(2.5);
 
-    def = this->add("support_material_speed", coFloat);
+    def = this->add("support_material_speed", codouble);
     def->label = "Support material";
     def->category = "Support material";
     def->tooltip = "Speed for printing support material.";
     def->sidetext = "mm/s";
     def->cli = "support-material-speed=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(60);
+    def->default_value = new ConfigOptiondouble(60);
 
     def = this->add("support_material_threshold", coInt);
     def->label = "Overhang threshold";
@@ -1206,15 +1206,15 @@ PrintConfigDef::PrintConfigDef()
     def->height = 50;
     def->default_value = new ConfigOptionString("");
 
-    def = this->add("top_infill_extrusion_width", coFloatOrPercent);
+    def = this->add("top_infill_extrusion_width", codoubleOrPercent);
     def->label = "Top solid infill";
     def->category = "Extrusion Width";
     def->tooltip = "Set this to a non-zero value to set a manual extrusion width for infill for top surfaces. You may want to use thinner extrudates to fill all narrow regions and get a smoother finish. If expressed as percentage (for example 90%) it will be computed over layer height.";
     def->sidetext = "mm or % (leave 0 for default)";
     def->cli = "top-infill-extrusion-width=s";
-    def->default_value = new ConfigOptionFloatOrPercent(0, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(0, false);
 
-    def = this->add("top_solid_infill_speed", coFloatOrPercent);
+    def = this->add("top_solid_infill_speed", codoubleOrPercent);
     def->label = "Top solid infill";
     def->category = "Speed";
     def->tooltip = "Speed for printing top solid layers (it only applies to the uppermost external layers and not to their internal solid layers). You may want to slow down this to get a nicer surface finish. This can be expressed as a percentage (for example: 80%) over the solid infill speed above. Set to zero for auto.";
@@ -1222,7 +1222,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "top-solid-infill-speed=s";
     def->ratio_over = "solid_infill_speed";
     def->min = 0;
-    def->default_value = new ConfigOptionFloatOrPercent(15, false);
+    def->default_value = new ConfigOptiondoubleOrPercent(15, false);
 
     def = this->add("top_solid_layers", coInt);
     def->label = "Top";
@@ -1233,14 +1233,14 @@ PrintConfigDef::PrintConfigDef()
     def->min = 0;
     def->default_value = new ConfigOptionInt(3);
 
-    def = this->add("travel_speed", coFloat);
+    def = this->add("travel_speed", codouble);
     def->label = "Travel";
     def->tooltip = "Speed for travel moves (jumps between distant extrusion points).";
     def->sidetext = "mm/s";
     def->cli = "travel-speed=f";
     def->aliases.push_back("travel_feed_rate");
     def->min = 1;
-    def->default_value = new ConfigOptionFloat(130);
+    def->default_value = new ConfigOptiondouble(130);
 
     def = this->add("use_firmware_retraction", coBool);
     def->label = "Use firmware retraction";
@@ -1260,13 +1260,13 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "use-volumetric-e!";
     def->default_value = new ConfigOptionBool(false);
 
-    def = this->add("vibration_limit", coFloat);
+    def = this->add("vibration_limit", codouble);
     def->label = "Vibration limit (deprecated)";
     def->tooltip = "This experimental option will slow down those moves hitting the configured frequency limit. The purpose of limiting vibrations is to avoid mechanical resonance. Set zero to disable.";
     def->sidetext = "Hz";
     def->cli = "vibration-limit=f";
     def->min = 0;
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
     def = this->add("wipe", coBools);
     def->label = "Wipe while retracting";
@@ -1278,20 +1278,20 @@ PrintConfigDef::PrintConfigDef()
         def->default_value = opt;
     }
 
-    def = this->add("xy_size_compensation", coFloat);
+    def = this->add("xy_size_compensation", codouble);
     def->label = "XY Size Compensation";
     def->category = "Advanced";
     def->tooltip = "The object will be grown/shrunk in the XY plane by the configured value (negative = inwards, positive = outwards). This might be useful for fine-tuning hole sizes.";
     def->sidetext = "mm";
     def->cli = "xy-size-compensation=f";
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 
-    def = this->add("z_offset", coFloat);
+    def = this->add("z_offset", codouble);
     def->label = "Z offset";
     def->tooltip = "This value will be added (or subtracted) from all the Z coordinates in the output G-code. It is used to compensate for bad Z endstop position: for example, if your endstop zero actually leaves the nozzle 0.3mm far from the print bed, set this to -0.3 (or fix your endstop).";
     def->sidetext = "mm";
     def->cli = "z-offset=f";
-    def->default_value = new ConfigOptionFloat(0);
+    def->default_value = new ConfigOptiondouble(0);
 }
 
 PrintConfigDef print_config_def;
@@ -1333,8 +1333,8 @@ DynamicPrintConfig::normalize() {
 double
 PrintConfigBase::min_object_distance() const
 {
-    double extruder_clearance_radius = this->option("extruder_clearance_radius")->getFloat();
-    double duplicate_distance = this->option("duplicate_distance")->getFloat();
+    double extruder_clearance_radius = this->option("extruder_clearance_radius")->getdouble();
+    double duplicate_distance = this->option("duplicate_distance")->getdouble();
     
     // min object distance is max(duplicate_distance, clearance_radius)
     return (this->option("complete_objects")->getBool() && extruder_clearance_radius > duplicate_distance)

@@ -5,7 +5,6 @@
 #include <QtWidgets/QMainWindow>
 //#include "ui_mainwindow.h"
 
-class QSplitter;
 class QTabWidget;
 
 class QMenu;
@@ -14,6 +13,7 @@ class QWidget;
 class QLabel;
 class QWidget;
 class QVBoxLayout;
+class QHBoxLayout;
 
 #include "ShowWidget.h"
 #include "FilamentConfigWidget.h"
@@ -27,26 +27,29 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = Q_NULLPTR);
 
-private:
+
     //Ui::MainWindowClass ui;
 
 private:
-	void initActions();
-	void initMenus();
-	void initWidgets();
+	void InitActions();
+	void InitMenus();
+	void InitWidgets();
+	void InitLayout();
 	void SetupWindowStyle();
 
 private:
-	QSplitter* mainSplitter;	//分割窗口
-	QTabWidget* leftTabWidget;
+	QWidget* central_widget_;
+	QHBoxLayout* central_widget_layout_;
+	QTabWidget* left_tabWidget_;
 	
-	PrintConfigWidget* printConfigWidget;
-	FilamentConfigWidget* filConfigWidget;
-	PrinterConfigWidget* printerConfigWidget;
+	PrintConfigWidget* print_config_widget_;
+	FilamentConfigWidget* fila_config_layout_;
+	PrinterConfigWidget* printer_config_layout_;
 
-	ShowWidget* showWidget;
+	ShowWidget* show_widget_;
 
 private:
+
 
 private:
 	//菜单项

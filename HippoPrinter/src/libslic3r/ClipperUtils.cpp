@@ -101,7 +101,7 @@ scaleClipperPolygons(ClipperLib::Paths &polygons, const double scale)
 }
 
 void
-offset(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const float delta,
+offset(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // read input
@@ -126,7 +126,7 @@ offset(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const float 
 }
 
 void
-offset(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const float delta,
+offset(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // perform offset
@@ -138,7 +138,7 @@ offset(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const float d
 }
 
 Slic3r::Polygons
-offset(const Slic3r::Polygons &polygons, const float delta,
+offset(const Slic3r::Polygons &polygons, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     Slic3r::Polygons pp;
@@ -147,7 +147,7 @@ offset(const Slic3r::Polygons &polygons, const float delta,
 }
 
 void
-offset(const Slic3r::Polylines &polylines, ClipperLib::Paths* retval, const float delta,
+offset(const Slic3r::Polylines &polylines, ClipperLib::Paths* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // read input
@@ -172,7 +172,7 @@ offset(const Slic3r::Polylines &polylines, ClipperLib::Paths* retval, const floa
 }
 
 void
-offset(const Slic3r::Polylines &polylines, Slic3r::Polygons* retval, const float delta,
+offset(const Slic3r::Polylines &polylines, Slic3r::Polygons* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // perform offset
@@ -184,7 +184,7 @@ offset(const Slic3r::Polylines &polylines, Slic3r::Polygons* retval, const float
 }
 
 void
-offset(const Slic3r::Surface &surface, Slic3r::Surfaces* retval, const float delta,
+offset(const Slic3r::Surface &surface, Slic3r::Surfaces* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // perform offset
@@ -202,7 +202,7 @@ offset(const Slic3r::Surface &surface, Slic3r::Surfaces* retval, const float del
 }
 
 void
-offset(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const float delta,
+offset(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     // perform offset
@@ -214,7 +214,7 @@ offset(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const float
 }
 
 Slic3r::ExPolygons
-offset_ex(const Slic3r::Polygons &polygons, const float delta,
+offset_ex(const Slic3r::Polygons &polygons, const double delta,
     double scale, ClipperLib::JoinType joinType, double miterLimit)
 {
     Slic3r::ExPolygons expp;
@@ -223,8 +223,8 @@ offset_ex(const Slic3r::Polygons &polygons, const float delta,
 }
 
 void
-offset2(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const float delta1,
-    const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
+offset2(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const double delta1,
+    const double delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
     // read input
     ClipperLib::Paths input;
@@ -256,8 +256,8 @@ offset2(const Slic3r::Polygons &polygons, ClipperLib::Paths* retval, const float
 }
 
 void
-offset2(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const float delta1,
-    const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
+offset2(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const double delta1,
+    const double delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
     // perform offset
     ClipperLib::Paths output;
@@ -268,8 +268,8 @@ offset2(const Slic3r::Polygons &polygons, Slic3r::Polygons* retval, const float 
 }
 
 Slic3r::Polygons
-offset2(const Slic3r::Polygons &polygons, const float delta1,
-    const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
+offset2(const Slic3r::Polygons &polygons, const double delta1,
+    const double delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
     Slic3r::Polygons pp;
     offset2(polygons, &pp, delta1, delta2, scale, joinType, miterLimit);
@@ -277,8 +277,8 @@ offset2(const Slic3r::Polygons &polygons, const float delta1,
 }
 
 void
-offset2(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const float delta1,
-    const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
+offset2(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const double delta1,
+    const double delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
     // perform offset
     ClipperLib::Paths output;
@@ -289,8 +289,8 @@ offset2(const Slic3r::Polygons &polygons, Slic3r::ExPolygons* retval, const floa
 }
 
 Slic3r::ExPolygons
-offset2_ex(const Slic3r::Polygons &polygons, const float delta1,
-    const float delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
+offset2_ex(const Slic3r::Polygons &polygons, const double delta1,
+    const double delta2, const double scale, const ClipperLib::JoinType joinType, const double miterLimit)
 {
     Slic3r::ExPolygons expp;
     offset2(polygons, &expp, delta1, delta2, scale, joinType, miterLimit);

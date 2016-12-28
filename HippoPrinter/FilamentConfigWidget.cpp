@@ -6,6 +6,14 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QDoubleSpinBox>
+#include <QDebug>
+
+//************************************************************************
+// 日期：2016/12/26 
+// 参数: QWidget * parent
+// 返回: 
+// 功能: 构造函数
+//************************************************************************
 
 FilamentConfigWidget::FilamentConfigWidget(QWidget* parent)
 	:QWidget(parent)
@@ -14,12 +22,23 @@ FilamentConfigWidget::FilamentConfigWidget(QWidget* parent)
 	InitLayout();
 }
 
+//************************************************************************
+// 日期：2016/12/26 
+// 返回: 
+// 功能:析构函数
+//************************************************************************
+
 FilamentConfigWidget::~FilamentConfigWidget()
 {
 }
 
-//初始化控件
 //TODO:参数初始化为之前设置的值
+//************************************************************************
+// 日期：2016/12/26 
+// 返回: void
+// 功能: 初始化控件
+//************************************************************************
+
 void FilamentConfigWidget::InitWidgets() {
 	//初始化布局
 	filacofig_main_layout_ = new QVBoxLayout();
@@ -51,42 +70,48 @@ void FilamentConfigWidget::InitWidgets() {
 	extru_multi_spinbox_->setValue(1);	//默认值
 
 	//初始化喷头设置控件
-	extruder_temp_label_ = new QLabel(QString::fromLocal8Bit("喷头温度设置："));
+	extruder_temp_label_ = new QLabel(QString::fromLocal8Bit("喷头温度设置:"));
 	extruder_first_temp_spinbox_ = new QSpinBox();
 	extruder_first_temp_spinbox_->setRange(0, 300);
 	extruder_first_temp_spinbox_->setWrapping(false);
 	extruder_first_temp_spinbox_->setSingleStep(1);
-	extruder_first_temp_spinbox_->setPrefix(QString::fromLocal8Bit("第一层： "));
+	extruder_first_temp_spinbox_->setPrefix(QString::fromLocal8Bit("第一层："));
 	extruder_first_temp_spinbox_->setSuffix(QString::fromLocal8Bit("℃"));
 	extruder_first_temp_spinbox_->setValue(205);	//默认值
 	extruder_other_temp_spinbox_ = new QSpinBox();
 	extruder_other_temp_spinbox_->setRange(0, 300);
 	extruder_other_temp_spinbox_->setWrapping(false);
 	extruder_other_temp_spinbox_->setSingleStep(1);
-	extruder_other_temp_spinbox_->setPrefix(QString::fromLocal8Bit("其他层： "));
+	extruder_other_temp_spinbox_->setPrefix(QString::fromLocal8Bit("其他层："));
 	extruder_other_temp_spinbox_->setSuffix(QString::fromLocal8Bit("℃"));
 	extruder_other_temp_spinbox_->setValue(205);	//默认值
 
 	//初始化热床温度设置控件
-	bed_temp_label_ = new QLabel(QString::fromLocal8Bit("热床温度"));
+	bed_temp_label_ = new QLabel(QString::fromLocal8Bit("热床温度:"));
 	bed_first_temp_spinbox_ = new QSpinBox();
 	bed_first_temp_spinbox_->setRange(0, 100);
 	bed_first_temp_spinbox_->setWrapping(false);
 	bed_first_temp_spinbox_->setSingleStep(1);
-	bed_first_temp_spinbox_->setPrefix(QString::fromLocal8Bit("第一层： "));
+	bed_first_temp_spinbox_->setPrefix(QString::fromLocal8Bit("第一层："));
 	bed_first_temp_spinbox_->setSuffix(QString::fromLocal8Bit("℃"));
 	bed_first_temp_spinbox_->setValue(55);	//默认值
 	bed_other_temp_spinbox_ = new QSpinBox();
 	bed_other_temp_spinbox_->setRange(0, 100);
 	bed_other_temp_spinbox_->setWrapping(false);
 	bed_other_temp_spinbox_->setSingleStep(1);
-	bed_other_temp_spinbox_->setPrefix(QString::fromLocal8Bit("其他层： "));
+	bed_other_temp_spinbox_->setPrefix(QString::fromLocal8Bit("其他层："));
 	bed_other_temp_spinbox_->setSuffix(QString::fromLocal8Bit("℃"));
 	bed_other_temp_spinbox_->setValue(55);	//默认值
 
 }
 
-//初始化布局
+
+//************************************************************************
+// 日期：2016/12/26 
+// 返回: void
+// 功能: 初始化控件布局
+//************************************************************************
+
 void FilamentConfigWidget::InitLayout() {
 	//初始化耗材参数设置控件的布局
 	fila_config_layout_->addWidget(diameter_label_, 0, 0);

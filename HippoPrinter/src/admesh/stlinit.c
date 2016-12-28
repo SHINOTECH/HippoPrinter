@@ -379,10 +379,10 @@ stl_read(stl_file *stl, int first_facet, int first) {
 //************************************
 void
 stl_facet_stats(stl_file *stl, stl_facet facet, int first) {
-  float diff_x;
-  float diff_y;
-  float diff_z;
-  float max_diff;
+  double diff_x;
+  double diff_y;
+  double diff_z;
+  double max_diff;
 
   if (stl->error) return;
 

@@ -757,7 +757,7 @@ Print::skirt_first_layer_height() const
 Flow
 Print::brim_flow() const
 {
-    ConfigOptionFloatOrPercent width = this->config.first_layer_extrusion_width;
+    ConfigOptiondoubleOrPercent width = this->config.first_layer_extrusion_width;
     if (width.value == 0) width = this->regions.front()->config.perimeter_extrusion_width;
     
     /* We currently use a random region's perimeter extruder.
@@ -777,7 +777,7 @@ Print::brim_flow() const
 Flow
 Print::skirt_flow() const
 {
-    ConfigOptionFloatOrPercent width = this->config.first_layer_extrusion_width;
+    ConfigOptiondoubleOrPercent width = this->config.first_layer_extrusion_width;
     if (width.value == 0) width = this->regions.front()->config.perimeter_extrusion_width;
     
     /* We currently use a random object's support material extruder.
