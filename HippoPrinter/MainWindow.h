@@ -35,10 +35,7 @@ private:
 	void InitMenus();
 	void InitWidgets();
 	void InitLayout();
-<<<<<<< HEAD
 	void InitConnections();
-=======
->>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 	void SetupWindowStyle();
 
 private:
@@ -52,36 +49,31 @@ private:
 
 	ShowWidget* show_widget_;
 
-<<<<<<< HEAD
 private slots:
 	void OpenFile();
-=======
-private:
-
->>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 
 private:
-	//菜单项
-	QMenu* file_menu_;	//文件菜单
-	QMenu* setting_menu_;	//设置菜单
-	QMenu* help_menu_;	//帮助菜单
+	//锟剿碉拷锟斤拷
+	QMenu* file_menu_;	//锟侥硷拷锟剿碉拷
+	QMenu* setting_menu_;	//锟斤拷锟矫菜碉拷
+	QMenu* help_menu_;	//锟斤拷锟斤拷锟剿碉拷
 
 private:
-	/*文件菜单下的操作*/
-	QAction* load_model_action_;	//读取模型文件
-	QAction* save_model_action_;	//保存模型文件
-	QAction* save_GCode_action_;	//保存GCode文件
-	QAction* print_action_;	//打印模型
-	QAction* clear_platform_action_;	//删除所有模型
-	QAction* quit_action_;	//退出操作
+	/*锟侥硷拷锟剿碉拷锟铰的诧拷锟斤拷*/
+	QAction* load_model_action_;	//锟斤拷取模锟斤拷锟侥硷拷
+	QAction* save_model_action_;	//锟斤拷锟斤拷模锟斤拷锟侥硷拷
+	QAction* save_GCode_action_;	//锟斤拷锟斤拷GCode锟侥硷拷
+	QAction* print_action_;	//锟斤拷印模锟斤拷
+	QAction* clear_platform_action_;	//删锟斤拷锟斤拷锟斤拷模锟斤拷
+	QAction* quit_action_;	//锟剿筹拷锟斤拷锟斤拷
 
-	/*设置菜单下的操作*/
-	QAction* global_setting_action_;	//打印机设置
+	/*锟斤拷锟矫菜碉拷锟铰的诧拷锟斤拷*/
+	QAction* global_setting_action_;	//锟斤拷印锟斤拷锟斤拷锟斤拷
 
-	/*帮助菜单下的操作*/
-	QAction* about_hippo_action_;	//获取Hippo资料
-	QAction* about_manual_action_;	//获取软件使用手册
-	QAction* about_qt_action_;	//获取相关资料
+	/*锟斤拷锟斤拷锟剿碉拷锟铰的诧拷锟斤拷*/
+	QAction* about_hippo_action_;	//锟斤拷取Hippo锟斤拷锟斤拷
+	QAction* about_manual_action_;	//锟斤拷取锟斤拷锟斤拷使锟斤拷锟街诧拷
+	QAction* about_qt_action_;	//锟斤拷取锟斤拷锟斤拷锟斤拷锟斤拷
 };
 
 
