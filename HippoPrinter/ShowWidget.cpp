@@ -1,5 +1,6 @@
 #include "ShowWidget.h"
 
+#include <algorithm>
 
 #include<QLabel>
 #include <QIcon>
@@ -9,21 +10,31 @@
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
 #include <QDebug>
+#include <QContextMenuEvent>
+#include <QAction>
+#include <QMenu>
 
 const float DEFAULT_COLOR[4] = { 1,1,0,1};
 const float SELECTED_COLOR[4] = { 0, 1, 0, 1 };
-const float HOVER_COLOR[4] = { 0,1,0,1 };
+const float HOVER_COLOR[4] = { 0.4,0.9,0,1 };
 
 ShowWidget::ShowWidget(QWidget * parent)
 	:QGLWidget(parent),
 	enable_picking_(true),
 	hovered_volume_index_(-1),
-	selected_volume_index_(-1)
+	selected_volume_index_(-1),
+	left_pressed_(false),
+	right_pressed_(true),
+	cur_mouse_x_(0), cur_mouse_y_(0),
+	pre_mouse_x_(0), pre_mouse_y_(0)
 {
 	setMouseTracking(true);
 	InitModel();
 
+	max_bbox_.defined = true;
+	SetDefaultBedShape();
 	
+	InitActions();
 }
 
 
@@ -72,26 +83,18 @@ void ShowWidget::initializeGL() {
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, light0_diffuse1);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular1);
 	
-	
-
-	/*float ambient_and_diffuse[] = { 0.5,0.3,0.3,1 };
-	float material_specular[] = { 1,1,1,1 };
-	float material_emission[] = { 0.1,0,0,0.9 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambient_and_diffuse);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material_emission);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);*/
-
 	trackball_.center = vcg::Point3f(0, 0, 0);
-	trackball_.radius = 1;
-
+	trackball_.radius = 50;
+	
 	glLoadIdentity();
+	//gluLookAt(1, 1, 1, 0, 0, 0, 0, 0, 1);
 }
 
 
 void ShowWidget::paintGL() {
 	
+	
+
 	glClearColor(1, 1, 1, 1);
 	glClearDepth(1);
 	glDepthFunc(GL_LESS);
@@ -101,8 +104,12 @@ void ShowWidget::paintGL() {
 	glLoadIdentity();
 
 	glPushMatrix();
+
+	gluLookAt(0.06, 0, 0.1, 0, 1, 0, 0, 0, 1);
 	trackball_.GetView();
 	trackball_.Apply();
+
+	glTranslatef(-max_bbox_.center().x, -max_bbox_.center().y, -max_bbox_.center().z);
 
 	if (enable_picking_) {
 		glDisable(GL_LIGHTING);
@@ -111,9 +118,8 @@ void ShowWidget::paintGL() {
 		glFinish();
 
 		GLbyte color[4];
-		glReadPixels(mouse_pos_x_, height() - mouse_pos_y_, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+		glReadPixels(cur_mouse_x_, height() - cur_mouse_y_, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
 		int volume_index = color[0] + color[1] * 256 + color[2] * 256 * 256 - 1;
-		qDebug() << volume_index << " , " << hovered_volume_index_;
 		if (hovered_volume_index_ >= 0 && hovered_volume_index_ < volumes_.size()) {
 			volumes_[hovered_volume_index_].SetHover(false);
 		}
@@ -136,7 +142,10 @@ void ShowWidget::paintGL() {
 	glDisable(GL_LIGHTING);
 	DrawXYZ();
 	glEnable(GL_LIGHTING);
+	DrawBedShape();
 	DrawVolumes();
+
+	
 	glPopMatrix();
 	
 }
@@ -150,28 +159,36 @@ void ShowWidget::resizeGL(int width, int height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	float r = width / (static_cast<float>(height));
-	glOrtho(-2,2,-2,2,-2,2);
+	Pointf3 max_bbox_size = max_bbox_.size();
+	float max_size = std::max(std::max(max_bbox_size.x, max_bbox_size.y), max_bbox_size.z) * 2;
+	int min_viewport_size = std::min(width, height);
 
+	float zoom = min_viewport_size / max_size;
+
+	float x = width / zoom;
+	float y = height / zoom;
+	float depth = std::max(std::max(max_bbox_size.x, max_bbox_size.y), max_bbox_size.z) * 2;
+	//glOrtho(-x / 2, x / 2, -y / 2, y / 2, -depth, depth * 2);
+	//glOrtho(-width / 2, width / 2, -height / 2, height / 2, -50, 50);
+	glOrtho(-280, 280, -280, 280, -280, 280);
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	//gluLookAt(1, 1, 1, 0, 0, 0, 0, 0, 1);
 }
 
 
 void ShowWidget::InitModel() {
-	char* model_name = "block.stl";
+	char* model_name = "3Dowllovely_face.stl";
 	LoadModel(model_name);
 }
-
-
-void ShowWidget::ShowSTL(){
-
-}
-
 
 
 void ShowWidget::DrawXYZ()
 {
 	glDisable(GL_DEPTH_TEST);
+
+	Pointf3 bbox_size = max_bbox_.size();
+	float axis_len = std::max(std::max(bbox_size.x, bbox_size.y), bbox_size.z) * 0.3;
 
 	glLineWidth(2);
 	float fCursor[4];
@@ -180,16 +197,16 @@ void ShowWidget::DrawXYZ()
 	glBegin(GL_LINES);
 	glColor3f(1.0, 0.0, 0.0); //X
 	glVertex3f(0, 0, 0);
-	glVertex3f(0.2, 0, 0);
+	glVertex3f(axis_len, 0, 0);
 
 	glColor3f(0.0, 1.0, 0.0);//Y
 	glVertex3f(0, 0, 0);
-	glVertex3f(0, 0.2, 0);
+	glVertex3f(0, axis_len, 0);
 
 	glEnable(GL_DEPTH_TEST);
 	glColor3f(0.0, 0.0, 1.0);//Z
 	glVertex3f(0, 0, 0);
-	glVertex3f(0, 0, 0.2);
+	glVertex3f(0, 0, axis_len);
 	glEnd();
 
 	glColor4fv(fCursor);
@@ -239,6 +256,31 @@ void ShowWidget::DrawVolumes(bool fakecolor)const {
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
+void ShowWidget::DrawBedShape()const {
+	float fCursor[4];
+	glGetFloatv(GL_CURRENT_COLOR, fCursor);	//获取当前颜色
+	glPushMatrix();
+	
+	glColor3f(0, 0, 1);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_TRIANGLES);
+
+ 	glVertex3f(bed_shape_.bed_minx_miny_.x, bed_shape_.bed_minx_miny_.y, 0);
+	glVertex3f(bed_shape_.bed_maxx_maxy_.x, bed_shape_.bed_maxx_maxy_.y, 0);
+	glVertex3f(bed_shape_.bed_minx_maxy_.x, bed_shape_.bed_minx_maxy_.y, 0);
+	
+	glVertex3f(bed_shape_.bed_minx_miny_.x,bed_shape_.bed_minx_miny_.y,0);
+	glVertex3f(bed_shape_.bed_maxx_miny_.x, bed_shape_.bed_maxx_miny_.y, 0);
+	glVertex3f(bed_shape_.bed_maxx_maxy_.x, bed_shape_.bed_maxx_maxy_.y, 0);
+	glEnd();
+
+	//glFlush();
+	glColor4fv(fCursor);
+	glEnable(GL_LIGHTING);
+	
+	glPopMatrix();
+}
+
 
 ///将Qt鼠标键盘事件转换为VCG库内的鼠标键盘事件
 vcg::Trackball::Button QT2VCG(Qt::MouseButton qtbt, Qt::KeyboardModifiers modifiers)
@@ -254,13 +296,30 @@ vcg::Trackball::Button QT2VCG(Qt::MouseButton qtbt, Qt::KeyboardModifiers modifi
 }
 
 void ShowWidget::mouseMoveEvent(QMouseEvent *event) {
-	mouse_pos_x_ = event->x();
-	mouse_pos_y_ = event->y();
+	pre_mouse_x_ = cur_mouse_x_;
+	pre_mouse_y_ = cur_mouse_y_;
+
+	cur_mouse_x_ = event->x();
+	cur_mouse_y_ = event->y();
+
 	if (hovered_volume_index_ == -1) {
-		trackball_.MouseMove(event->x(), event->y());
+		if (selected_volume_index_ >= 0 && selected_volume_index_ < volumes_.size()) {
+			volumes_[selected_volume_index_].SetSelected(false);
+		}
+		selected_volume_index_ = -1;
+		trackball_.MouseMove(event->x(), height()- event->y());
+		update();
+		return;
 	}
-	
-	
+	if (left_pressed_ && selected_volume_index_ >= 0 && selected_volume_index_ < volumes_.size()) {
+		Pointf3 curPos;
+		UnProject(cur_mouse_x_, height() - cur_mouse_y_, curPos);
+		Pointf3 prePos;
+		UnProject(pre_mouse_x_, height() - pre_mouse_y_, prePos);
+
+		Pointf3 trans_vector(curPos.x - prePos.x, curPos.y - prePos.y, curPos.z - prePos.z);
+		volumes_[selected_volume_index_].Origin().translate(trans_vector.x, trans_vector.y,0);
+	}
 	update();
 }
 
@@ -275,11 +334,31 @@ void ShowWidget::wheelEvent(QWheelEvent* event) {
 }
 
 void ShowWidget::mousePressEvent(QMouseEvent* event) {
+	if (event->button() == Qt::LeftButton) {
+		left_pressed_ = true;
+	}
+	else if (event->button() == Qt::RightButton) {
+		right_pressed_ = true;
+	}
+	if (selected_volume_index_ >= 0 && selected_volume_index_ < volumes_.size()) {
+		volumes_[selected_volume_index_].SetSelected(false);
+		selected_volume_index_ = -1;
+	}
+	if (hovered_volume_index_ >= 0 && hovered_volume_index_ < volumes_.size()) {
+		selected_volume_index_ = hovered_volume_index_;
+		volumes_[selected_volume_index_].SetSelected(true);
+	}
 	trackball_.MouseDown(event->x(), height() - event->y(), QT2VCG(event->button(), event->modifiers()));
 	update();
 }
 
 void ShowWidget::mouseReleaseEvent(QMouseEvent *event) {
+	if (event->button() == Qt::LeftButton) {
+		left_pressed_ = false;
+	}
+	else if (event->button() == Qt::RightButton) {
+		right_pressed_ = false;
+	}
 	trackball_.MouseUp(event->x(), height() - event->y(), QT2VCG(event->button(), event->modifiers()));
 }
 
@@ -294,6 +373,12 @@ void ShowWidget::keyReleaseEvent(QKeyEvent *event) {
 	if (event->key() == Qt::Key_Alt) {
 		trackball_.ButtonUp(QT2VCG(Qt::NoButton, Qt::AltModifier));
 	}
+}
+
+void ShowWidget::contextMenuEvent(QContextMenuEvent *event) {
+	right_button_menu_->clear();
+	right_button_menu_->addAction(reset_trackball_action_);
+	right_button_menu_->exec(QCursor::pos());
 }
 
 
@@ -323,3 +408,97 @@ void ShowWidget::ReloadVolumes() {
 	}
 }
 
+void ShowWidget::ReloadMaxBBox() {
+	BoundingBoxf& bed_bbox = bed_shape_.BBox();
+	max_bbox_.min = Pointf3(bed_bbox.min.x, bed_bbox.min.y, 0);
+	max_bbox_.max = Pointf3(bed_bbox.max.x, bed_bbox.max.y, 0);
+
+	for (SceneVolume volume : volumes_) {
+		max_bbox_.merge(volume.BBox());
+	}
+}
+
+void ShowWidget::SetBedShape(const BedShape& bed) {
+	bed_shape_ = bed;
+	ReloadMaxBBox();
+}
+
+void ShowWidget::SetDefaultBedShape() {
+	bed_shape_ = BedShape(0, 280, 0, 180);
+	ReloadMaxBBox();
+}
+
+void ShowWidget::InitActions() {
+	right_button_menu_ = new QMenu();
+	reset_trackball_action_ = new QAction(QString::fromLocal8Bit("重置"), this);
+
+	connect(reset_trackball_action_, SIGNAL(triggered()), this, SLOT(ResetTrackball()));
+}
+
+void ShowWidget::ResetTrackball() {
+	trackball_.SetIdentity();
+	update();
+}
+
+void ShowWidget::UnProject(int mouse_x, int mouse_y, Pointf3& world) {
+	glPushMatrix();
+
+	GLdouble model_view[16];
+	GLdouble projection[16];
+	GLint view_port[4];
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, model_view);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, view_port);
+
+	float win_z;
+	glReadPixels(mouse_x, mouse_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &win_z);
+
+	gluUnProject((GLdouble)mouse_x, (GLdouble)mouse_y, win_z,
+		model_view, projection, view_port,
+		&world.x, &world.y, &world.z);
+	glPopMatrix();
+}
+
+BedShape::BedShape() :
+	bed_minx_miny_(0, 0), bed_minx_maxy_(0, 0), bed_maxx_miny_(0, 0), bed_maxx_maxy_(0, 0) {
+	ReloadBBox();
+}
+
+BedShape::BedShape(const BedShape& bed)
+	:bed_minx_miny_(bed.bed_minx_miny_),
+	bed_minx_maxy_(bed.bed_minx_maxy_),
+	bed_maxx_miny_(bed.bed_maxx_miny_),
+	bed_maxx_maxy_(bed.bed_maxx_maxy_){
+	ReloadBBox();
+}
+
+BedShape::BedShape(float minx, float maxx, float miny, float maxy) 
+	:bed_minx_miny_(minx,miny),
+	bed_minx_maxy_(minx,maxy),
+	bed_maxx_miny_(maxx,miny),
+	bed_maxx_maxy_(maxx,maxy){
+	ReloadBBox();
+}
+
+BedShape& BedShape::operator =(const BedShape& bed) {
+	bed_minx_miny_ = bed.bed_minx_miny_;
+	bed_minx_maxy_ = bed.bed_minx_maxy_;
+	bed_maxx_miny_ = bed.bed_maxx_miny_;
+	bed_maxx_maxy_ = bed.bed_maxx_maxy_;
+	ReloadBBox();
+	return *this;
+}
+
+const BoundingBoxf& BedShape::BBox()const {
+	return bbox_;
+}
+
+BoundingBoxf& BedShape::BBox() {
+	return bbox_;
+}
+
+void BedShape::ReloadBBox() {
+	bbox_.min = bed_minx_miny_;
+	bbox_.max = bed_maxx_maxy_;
+}

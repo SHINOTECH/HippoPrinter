@@ -248,7 +248,6 @@ stl_reallocate(stl_file *stl) {
 
 
 /* Reads the contents of the file pointed to by stl->fp into the stl structure,
-<<<<<<< HEAD
 starting at facet first_facet.  The second argument says if it's our first
 time running this for the stl and therefore we should reset our max and min stats. */
 void

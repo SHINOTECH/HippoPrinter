@@ -18,22 +18,19 @@
 #include <QStatusBar>
 #include <QFileDialog>
 
-
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	//ui.setupUi(this);
 	setWindowTitle(QString::fromLocal8Bit("Hippo"));
 	//setMinimumSize(QSize(1000, 800));
-	
-	
-	InitActions();	
+
+	//³õÊ¼»¯²Ëµ¥ºÍ²Ëµ¥Ïî
+	InitActions();
 	InitMenus();
 	InitWidgets();
 	InitLayout();
-
 	InitConnections();
-
 
 	setContentsMargins(5, 5, 10, 5);
 	statusBar()->showMessage(tr("Ready"));
@@ -46,54 +43,55 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::InitActions() {
 
-
-	load_model_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½"));
+	/*ÎÄ¼þ²Ëµ¥ÏÂµÄ²Ù×÷*/
+	//´ò¿ªÄ£ÐÍ
+	load_model_action_ = new QAction(QString::fromLocal8Bit("´ò¿ªÄ£ÐÍ"));
 	load_model_action_->setShortcut(tr("Ctrl+O"));
-	load_model_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½"));
-	
-	//ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
-	save_model_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½"));
+	load_model_action_->setStatusTip(QString::fromLocal8Bit("´ò¿ªÄ£ÐÍÎÄ¼þ"));
+
+	//±£´æÄ£ÐÍ
+	save_model_action_ = new QAction(QString::fromLocal8Bit("±£´æÄ£ÐÍ"));
 	save_model_action_->setShortcut(tr("Ctrl+S"));
-	save_model_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½"));
+	save_model_action_->setStatusTip(QString::fromLocal8Bit("±£´æÄ£ÐÍÎÄ¼þ"));
 
-	//ï¿½ï¿½ï¿½ï¿½GCodeï¿½Ä¼ï¿½
-	save_GCode_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½ï¿½"));
+	//±£´æGCodeÎÄ¼þ
+	save_GCode_action_ = new QAction(QString::fromLocal8Bit("±£´æG´úÂë"));
 	save_GCode_action_->setShortcut(tr("Ctrl+G"));
-	save_GCode_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½GCodeï¿½Ä¼ï¿½"));
+	save_GCode_action_->setStatusTip(QString::fromLocal8Bit("±£´æGCodeÎÄ¼þ"));
 
-	//ï¿½ï¿½Ó¡Ä£ï¿½ï¿½
-	print_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½Ó¡Ä£ï¿½ï¿½"));
+	//´òÓ¡Ä£ÐÍ
+	print_action_ = new QAction(QString::fromLocal8Bit("´òÓ¡Ä£ÐÍ"));
 	print_action_->setShortcut(tr("Ctrl+P"));
-	print_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½Ó¡ï¿½ï¿½Î¬Ä£ï¿½ï¿½"));
+	print_action_->setStatusTip(QString::fromLocal8Bit("´òÓ¡ÈýÎ¬Ä£ÐÍ"));
 
-	//ï¿½ï¿½ï¿½ï¿½Æ½Ì¨
-	clear_platform_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Æ½Ì¨"));
-	clear_platform_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¬Ä£ï¿½ï¿½"));
+	//Çå³ýÆ½Ì¨
+	clear_platform_action_ = new QAction(QString::fromLocal8Bit("Çå³ýÆ½Ì¨"));
+	clear_platform_action_->setStatusTip(QString::fromLocal8Bit("Çå³ýËùÓÐÈýÎ¬Ä£ÐÍ"));
 
-	//ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½
-	quit_action_ = new QAction(QString::fromLocal8Bit("ï¿½Ë³ï¿½"));
+	//ÍË³ö³ÌÐò
+	quit_action_ = new QAction(QString::fromLocal8Bit("ÍË³ö"));
 	quit_action_->setShortcut(tr("Ctrl+Q"));
-	quit_action_->setStatusTip(QString::fromLocal8Bit("ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½"));
+	quit_action_->setStatusTip(QString::fromLocal8Bit("ÍË³ö³ÌÐò"));
 
 
-	/*ï¿½ï¿½ï¿½Ã²Ëµï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½*/
-	//ï¿½ï¿½ï¿½Ã´ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½
-	global_setting_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
-	global_setting_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½Ã´ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½"));
+	/*ÉèÖÃ²Ëµ¥ÏÂµÄ²Ù×÷*/
+	//ÉèÖÃ´òÓ¡²ÎÊý
+	global_setting_action_ = new QAction(QString::fromLocal8Bit("´òÓ¡»úÉèÖÃ"));
+	global_setting_action_->setStatusTip(QString::fromLocal8Bit("ÉèÖÃ´òÓ¡»úÏà¹Ø²ÎÊý"));
 
 
-	/*ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½*/
-	//ï¿½ï¿½È¡Hippoï¿½ï¿½ï¿½ï¿½
-	about_hippo_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Hippo"));
-	about_hippo_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Hippoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
+	/*°ïÖú²Ëµ¥ÏÂµÄ²Ù×÷*/
+	//»ñÈ¡Hippo×ÊÁÏ
+	about_hippo_action_ = new QAction(QString::fromLocal8Bit("¹ØÓÚHippo"));
+	about_hippo_action_->setStatusTip(QString::fromLocal8Bit("¹ØÓÚHippoµÄ×ÊÁÏ"));
 
-	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½
-	about_manual_action_ = new QAction(QString::fromLocal8Bit("Ê¹ï¿½ï¿½ï¿½Ö²ï¿½"));
-	about_manual_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ö²ï¿½"));
+	//»ñÈ¡Èí¼þÊÖ²á
+	about_manual_action_ = new QAction(QString::fromLocal8Bit("Ê¹ÓÃÊÖ²á"));
+	about_manual_action_->setStatusTip(QString::fromLocal8Bit("Èí¼þÊ¹ÓÃÊÖ²á"));
 
-	//ï¿½ï¿½È¡Qtï¿½ï¿½ï¿½ï¿½
-	about_qt_action_ = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½Qt"));
-	about_qt_action_->setStatusTip(QString::fromLocal8Bit("ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Qtï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
+	//»ñÈ¡Qt×ÊÁÏ
+	about_qt_action_ = new QAction(QString::fromLocal8Bit("¹ØÓÚQt"));
+	about_qt_action_->setStatusTip(QString::fromLocal8Bit("»ñÈ¡¹ØÓÚQtµÄ×ÊÁÏ"));
 }
 
 void MainWindow::SetupWindowStyle() {
@@ -107,14 +105,14 @@ void MainWindow::SetupWindowStyle() {
 }
 
 //************************************
-// ï¿½ï¿½ï¿½ï¿½: big-hippo
-// ï¿½ï¿½ï¿½Ú£ï¿½2016/12/19 
-// ï¿½ï¿½ï¿½ï¿½: void
-// ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½
+// ×÷Õß: big-hippo
+// ÈÕÆÚ£º2016/12/19 
+// ·µ»Ø: void
+// ¹¦ÄÜ: ³õÊ¼»¯²Ëµ¥À¸
 //************************************
 void MainWindow::InitMenus() {
-	//ï¿½Ä¼ï¿½ï¿½Ëµï¿½
-	file_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("ï¿½Ä¼ï¿½"));
+	//ÎÄ¼þ²Ëµ¥
+	file_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("ÎÄ¼þ"));
 	file_menu_->addAction(load_model_action_);
 	file_menu_->addAction(save_model_action_);
 	file_menu_->addAction(save_GCode_action_);
@@ -124,13 +122,13 @@ void MainWindow::InitMenus() {
 	file_menu_->addSeparator();
 	file_menu_->addAction(quit_action_);
 
-	//ï¿½ï¿½ï¿½Ã²Ëµï¿½
-	setting_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"));
+	//ÉèÖÃ²Ëµ¥
+	setting_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("ÉèÖÃ"));
 	setting_menu_->addAction(global_setting_action_);
-	
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
-	help_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"));
+
+	//°ïÖú²Ëµ¥
+	help_menu_ = menuBar()->addMenu(QString::fromLocal8Bit("°ïÖú"));
 	help_menu_->addAction(about_hippo_action_);
 	help_menu_->addAction(about_hippo_action_);
 	help_menu_->addAction(about_hippo_action_);
@@ -139,10 +137,10 @@ void MainWindow::InitMenus() {
 
 
 //************************************
-// ï¿½ï¿½ï¿½ï¿½: big-hippo
-// ï¿½ï¿½ï¿½Ú£ï¿½2016/12/19 
-// ï¿½ï¿½ï¿½ï¿½: void
-// ï¿½ï¿½ï¿½ï¿½:
+// ×÷Õß: big-hippo
+// ÈÕÆÚ£º2016/12/19 
+// ·µ»Ø: void
+// ¹¦ÄÜ:
 //************************************
 void MainWindow::InitWidgets() {
 	print_config_widget_ = new PrintConfigWidget();
@@ -150,22 +148,22 @@ void MainWindow::InitWidgets() {
 	printer_config_layout_ = new PrinterConfigWidget();
 
 	left_tabWidget_ = new QTabWidget();
-	left_tabWidget_->addTab(print_config_widget_, QString::fromLocal8Bit("ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½"));
-	left_tabWidget_->addTab(fila_config_layout_, QString::fromLocal8Bit("ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½"));
-	left_tabWidget_->addTab(printer_config_layout_, QString::fromLocal8Bit("ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"));
-	
+	left_tabWidget_->addTab(print_config_widget_, QString::fromLocal8Bit("´òÓ¡ÉèÖÃ"));
+	left_tabWidget_->addTab(fila_config_layout_, QString::fromLocal8Bit("ºÄ²ÄÉèÖÃ"));
+	left_tabWidget_->addTab(printer_config_layout_, QString::fromLocal8Bit("´òÓ¡»úÉèÖÃ"));
+
 	show_widget_ = new ShowWidget();
 	central_widget_ = new QWidget();
 	central_widget_layout_ = new QHBoxLayout();
-	central_widget_layout_->addWidget(left_tabWidget_,1);
-	central_widget_layout_->addWidget(show_widget_,6);
+	central_widget_layout_->addWidget(left_tabWidget_, 1);
+	central_widget_layout_->addWidget(show_widget_, 6);
 
 }
 
 //************************************************************************
-// ï¿½ï¿½ï¿½Ú£ï¿½2016/12/26 
-// ï¿½ï¿½ï¿½ï¿½: void
-// ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ã´ï¿½ï¿½Ú²ï¿½ï¿½ï¿½
+// ÈÕÆÚ£º2016/12/26 
+// ·µ»Ø: void
+// ¹¦ÄÜ: ÉèÖÃ´°¿Ú²¼¾Ö
 //************************************************************************
 
 void MainWindow::InitLayout() {
@@ -173,14 +171,12 @@ void MainWindow::InitLayout() {
 	setCentralWidget(central_widget_);
 }
 
-
 void MainWindow::InitConnections() {
 	connect(load_model_action_, SIGNAL(triggered()), this, SLOT(OpenFile()));
 }
 
 
 void MainWindow::OpenFile() {
-	QString file = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½"),"", "*.stl");
+	QString file = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("´ò¿ªÎÄ¼þ"), "", "*.stl");
 	show_widget_->LoadModel(file.toLatin1().data());
 }
-

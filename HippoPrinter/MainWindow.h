@@ -22,13 +22,13 @@ class QHBoxLayout;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = Q_NULLPTR);
+	MainWindow(QWidget *parent = Q_NULLPTR);
 
 
-    //Ui::MainWindowClass ui;
+	//Ui::MainWindowClass ui;
 
 private:
 	void InitActions();
@@ -42,38 +42,38 @@ private:
 	QWidget* central_widget_;
 	QHBoxLayout* central_widget_layout_;
 	QTabWidget* left_tabWidget_;
-	
+
 	PrintConfigWidget* print_config_widget_;
 	FilamentConfigWidget* fila_config_layout_;
 	PrinterConfigWidget* printer_config_layout_;
 
 	ShowWidget* show_widget_;
 
-private slots:
+	private slots:
 	void OpenFile();
 
 private:
-	//ï¿½Ëµï¿½ï¿½ï¿½
-	QMenu* file_menu_;	//ï¿½Ä¼ï¿½ï¿½Ëµï¿½
-	QMenu* setting_menu_;	//ï¿½ï¿½ï¿½Ã²Ëµï¿½
-	QMenu* help_menu_;	//ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
+	//²Ëµ¥Ïî
+	QMenu* file_menu_;	//ÎÄ¼þ²Ëµ¥
+	QMenu* setting_menu_;	//ÉèÖÃ²Ëµ¥
+	QMenu* help_menu_;	//°ïÖú²Ëµ¥
 
 private:
-	/*ï¿½Ä¼ï¿½ï¿½Ëµï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½*/
-	QAction* load_model_action_;	//ï¿½ï¿½È¡Ä£ï¿½ï¿½ï¿½Ä¼ï¿½
-	QAction* save_model_action_;	//ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½
-	QAction* save_GCode_action_;	//ï¿½ï¿½ï¿½ï¿½GCodeï¿½Ä¼ï¿½
-	QAction* print_action_;	//ï¿½ï¿½Ó¡Ä£ï¿½ï¿½
-	QAction* clear_platform_action_;	//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
-	QAction* quit_action_;	//ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½
+	/*ÎÄ¼þ²Ëµ¥ÏÂµÄ²Ù×÷*/
+	QAction* load_model_action_;	//¶ÁÈ¡Ä£ÐÍÎÄ¼þ
+	QAction* save_model_action_;	//±£´æÄ£ÐÍÎÄ¼þ
+	QAction* save_GCode_action_;	//±£´æGCodeÎÄ¼þ
+	QAction* print_action_;	//´òÓ¡Ä£ÐÍ
+	QAction* clear_platform_action_;	//É¾³ýËùÓÐÄ£ÐÍ
+	QAction* quit_action_;	//ÍË³ö²Ù×÷
 
-	/*ï¿½ï¿½ï¿½Ã²Ëµï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½*/
-	QAction* global_setting_action_;	//ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+							/*ÉèÖÃ²Ëµ¥ÏÂµÄ²Ù×÷*/
+	QAction* global_setting_action_;	//´òÓ¡»úÉèÖÃ
 
-	/*ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½*/
-	QAction* about_hippo_action_;	//ï¿½ï¿½È¡Hippoï¿½ï¿½ï¿½ï¿½
-	QAction* about_manual_action_;	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ö²ï¿½
-	QAction* about_qt_action_;	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+										/*°ïÖú²Ëµ¥ÏÂµÄ²Ù×÷*/
+	QAction* about_hippo_action_;	//»ñÈ¡Hippo×ÊÁÏ
+	QAction* about_manual_action_;	//»ñÈ¡Èí¼þÊ¹ÓÃÊÖ²á
+	QAction* about_qt_action_;	//»ñÈ¡Ïà¹Ø×ÊÁÏ
 };
 
 
