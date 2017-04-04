@@ -26,6 +26,13 @@ ShowWidget::ShowWidget(QWidget * parent)
 	
 }
 
+
+//************************************************************************
+// 日期：2016/12/20 
+// 返回: 
+// 功能: 析构函数
+//************************************************************************
+
 ShowWidget::~ShowWidget(){
 	
 }
@@ -135,7 +142,6 @@ void ShowWidget::paintGL() {
 }
 
 
-
 void ShowWidget::resizeGL(int width, int height) {
 	if (height == 0) {
 		height = 1;
@@ -158,6 +164,7 @@ void ShowWidget::InitModel() {
 
 
 void ShowWidget::ShowSTL(){
+
 }
 
 
@@ -165,6 +172,7 @@ void ShowWidget::ShowSTL(){
 void ShowWidget::DrawXYZ()
 {
 	glDisable(GL_DEPTH_TEST);
+
 	glLineWidth(2);
 	float fCursor[4];
 	glGetFloatv(GL_CURRENT_COLOR, fCursor);	//获取当前颜色
@@ -314,3 +322,4 @@ void ShowWidget::ReloadVolumes() {
 		}
 	}
 }
+

@@ -186,7 +186,11 @@ void TriangleMesh::scale(float factor)
 
 void TriangleMesh::scale(const Pointf3 &versor)
 {
+<<<<<<< HEAD
     double fversor[3];
+=======
+    float fversor[3];
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
     fversor[0] = versor.x;
     fversor[1] = versor.y;
     fversor[2] = versor.z;

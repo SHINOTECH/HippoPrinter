@@ -16,7 +16,10 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QStatusBar>
+<<<<<<< HEAD
 #include <QFileDialog>
+=======
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -30,8 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
 	InitMenus();
 	InitWidgets();
 	InitLayout();
+<<<<<<< HEAD
 	InitConnections();
 
+=======
+	
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 	setContentsMargins(5, 5, 10, 5);
 	statusBar()->showMessage(tr("Ready"));
 
@@ -170,6 +177,7 @@ void MainWindow::InitLayout() {
 	central_widget_->setLayout(central_widget_layout_);
 	setCentralWidget(central_widget_);
 }
+<<<<<<< HEAD
 
 void MainWindow::InitConnections() {
 	connect(load_model_action_, SIGNAL(triggered()), this, SLOT(OpenFile()));
@@ -180,3 +188,5 @@ void MainWindow::OpenFile() {
 	QString file = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("打开文件"),"", "*.stl");
 	show_widget_->LoadModel(file.toLatin1().data());
 }
+=======
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc

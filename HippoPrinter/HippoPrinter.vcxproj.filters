@@ -217,6 +217,12 @@
     <ClCompile Include="src\polypartition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="RenderGraphic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
     <ClCompile Include="src\poly2tri\common\shapes.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -244,6 +250,7 @@
     <ClCompile Include="Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="C:\vcglib\wrap\gui\trackball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -251,6 +258,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scenevolume.cpp">
+=======
+    <ClCompile Include="trackball\Quaternion.cpp">
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -389,6 +399,12 @@
     <ClInclude Include="src\polypartition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="RenderGraphic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
     <ClInclude Include="src\poly2tri\common\shapes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -422,7 +438,20 @@
     <ClInclude Include="Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="scenevolume.h">
+=======
+    <ClInclude Include="trackball\Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trackball\Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trackball\Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trackball\Line2.h">
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

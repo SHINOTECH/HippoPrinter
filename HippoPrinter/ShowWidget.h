@@ -2,6 +2,7 @@
 #define ShowWidget_H__
 
 #pragma once
+
 #include <iostream>
 #include <vector>
 
@@ -29,7 +30,7 @@ public:
 	void resizeGL(int width, int height);
 	void InitModel();
 
-public:
+public：
 	void mouseMoveEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent* event);
 	void mousePressEvent(QMouseEvent* event);
@@ -50,7 +51,7 @@ private:
 private:
 	vcg::Trackball trackball_;
 
-	TriangleMesh trimesh_;	//当前的三维模型	
+	TriangleMesh trimesh_;	
 
 	Model model_;
 	std::vector<SceneVolume> volumes_;

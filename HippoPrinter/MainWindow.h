@@ -35,7 +35,10 @@ private:
 	void InitMenus();
 	void InitWidgets();
 	void InitLayout();
+<<<<<<< HEAD
 	void InitConnections();
+=======
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 	void SetupWindowStyle();
 
 private:
@@ -49,8 +52,13 @@ private:
 
 	ShowWidget* show_widget_;
 
+<<<<<<< HEAD
 private slots:
 	void OpenFile();
+=======
+private:
+
+>>>>>>> f40a78d240b8b63cb2998281c341e4544b3adecc
 
 private:
 	//²Ëµ¥Ïî
