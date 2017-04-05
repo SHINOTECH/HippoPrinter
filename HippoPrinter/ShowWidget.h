@@ -69,7 +69,7 @@ private:
 	void DrawVolumes(bool fakecolor = false) const;
 	void DrawBedShape()const;
 
-	void ReloadVolumes();
+	void LoadVolumes();
 	void ReloadMaxBBox();
 
 
@@ -81,6 +81,22 @@ private:
 
 private slots:
 	void ResetTrackball();
+	void DeleteVolume();
+	void ReloadAllVolumes();
+
+	void RotateVolumeX();
+	void RotateVolumeY();
+	void RotateVolumeZ();
+	
+	void MirrorVolumeX();
+	void MirrorVolumeY();
+	void MirrorVolumeZ();
+
+	void ScaleVolumeUniformly();
+	void ScaleVolumeX();
+	void ScaleVolumeY();
+	void ScaleVolumeZ();
+
 
 private:
 	vcg::Trackball trackball_;
@@ -108,9 +124,29 @@ private:
 	bool left_pressed_;
 	bool right_pressed_;
 
-	QAction* reset_trackball_action_;
-	QMenu* right_button_menu_;
 
+
+	QMenu* right_button_menu_;
+	QMenu* mirror_volume_menu_;
+	QMenu* scale_volume_menu_;
+	QMenu* rotate_volume_menu_;
+	
+	QAction* reset_trackball_action_;
+	QAction* reload_volumes_action_;
+
+	QAction* delete_volume_action_;
+	QAction* rotate_volume_x_action_;
+	QAction* rotate_volume_y_action_;
+	QAction* rotate_volume_z_action_;
+	
+	QAction* mirror_volume_x_action_;
+	QAction* mirror_volume_y_action_;
+	QAction* mirror_volume_z_action_;
+
+	QAction* scale_volume_u_action_;
+	QAction* scale_volume_x_action_;
+	QAction* scale_volume_y_action_;
+	QAction* scale_volume_z_action_;
 };
 #endif // ShowWidget_H__
 

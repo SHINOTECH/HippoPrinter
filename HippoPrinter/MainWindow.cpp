@@ -17,12 +17,14 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QFileDialog>
+#include <QIcon>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	//ui.setupUi(this);
 	setWindowTitle(QString::fromLocal8Bit("Hippo"));
+	setWindowIcon(QIcon("./Resources/hippo.svg"));
 	//setMinimumSize(QSize(1000, 800));
 
 	//初始化菜单和菜单项

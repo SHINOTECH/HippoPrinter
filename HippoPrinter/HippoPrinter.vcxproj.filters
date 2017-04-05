@@ -431,11 +431,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Resources\hippo.svg" />
+    <None Include="svg2.bin" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico" />
-    <Image Include="HippoPrinter.ico" />
     <Image Include="Resources\icon.png" />
-    <Image Include="icon.png" />
+    <Image Include="Resources\hippo.ico" />
+    <Image Include="HippoPrinter.ico" />
+    <Image Include="Resources\hippo.png" />
   </ItemGroup>
 </Project>
